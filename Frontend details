@@ -1,0 +1,47 @@
+Customer Registration:
+First name
+Last name
+Mobile
+Email
+City
+Pincode
+
+Vendor Registration:
+First name
+Last name
+Mobile
+email
+company
+address
+
+Customer login table
+email
+password
+Cid (FK)
+
+Vendor Login table
+email
+password
+Vid(Fk)
+
+Request form
+Name
+email
+mobile
+property type
+address
+electricity bill
+electricity consumption
+
+Quotation form
+name 
+email
+mobile
+company
+amount
+delivery date
+Quotation pdf
+
+
+
+
