@@ -25,6 +25,8 @@ password
 Vid(Fk)
 
 Request form
+Rid
+Cid(FK)
 Name
 email
 mobile
@@ -34,6 +36,9 @@ electricity bill
 electricity consumption
 
 Quotation form
+Qid
+Rid (FK)
+Vid(FK)
 name 
 email
 mobile
@@ -41,6 +46,17 @@ company
 amount
 delivery date
 Quotation pdf
+
+Orders
+Oid
+Qid(FK)
+C name
+V name
+Company
+Site Address
+Amount
+
+
 
 
 
