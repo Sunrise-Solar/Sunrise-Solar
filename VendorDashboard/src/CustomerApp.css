@@ -1,0 +1,63 @@
+/* General styling for the app */
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+  }
+  
+  .sidebar {
+    width: 200px;
+    height: calc(100vh - 56px); /* Adjust height based on Navbar size */
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    flex-grow: 1;
+    
+  }
+  
+  .footer {
+    background-color: #001f3f; /* Navy blue background for footer */
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .home {
+    padding: 20px;
+  }
+  
+  .landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  .navbar {
+    padding: 0.25rem 1rem; /* Reduce padding to decrease height */
+    height: 100px; /* Set a fixed height for the Navbar */
+}
+
+.navbar-brand h1 {
+    font-size: 1.25rem; /* Reduce font size of the heading */
+    margin: 0; /* Remove default margin */
+}
+
+.navbar .btn {
+    font-size: 0.875rem; /* Smaller font size for buttons */
+    padding: 0.25rem 0.75rem; /* Adjust button padding */
+}
+
+/* Adjust navbar container to center content */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
