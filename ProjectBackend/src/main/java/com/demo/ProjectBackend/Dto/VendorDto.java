@@ -1,16 +1,6 @@
-package com.demo.ProjectBackend.beans;
+package com.demo.ProjectBackend.Dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Vendor {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int vId;
+public class VendorDto {
 	
 	private String fName;
 	
@@ -23,12 +13,14 @@ public class Vendor {
 	private String company;
 	
 	private String address;
-
-	public Vendor() {
-		super();
-	}
 	
-	public Vendor(String fName, String lName, String mobile, String email, String company, String address) {
+	private String password;
+
+	public VendorDto() {
+		super();
+	}
+
+	public VendorDto(String fName, String lName, String mobile, String email, String company, String address) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
@@ -38,23 +30,15 @@ public class Vendor {
 		this.address = address;
 	}
 
-	public Vendor(int vId, String fName, String lName, String mobile, String email, String company, String address) {
+	public VendorDto(String fName, String lName, String mobile, String email, String company, String address, String password) {
 		super();
-		this.vId = vId;
 		this.fName = fName;
 		this.lName = lName;
 		this.mobile = mobile;
 		this.email = email;
 		this.company = company;
 		this.address = address;
-	}
-
-	public int getvId() {
-		return vId;
-	}
-
-	public void setvId(int vId) {
-		this.vId = vId;
+		this.password = password;
 	}
 
 	public String getfName() {
@@ -96,7 +80,7 @@ public class Vendor {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -105,13 +89,17 @@ public class Vendor {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "Vendor [vId=" + vId + ", fName=" + fName + ", lName=" + lName + ", mobile=" + mobile + ", company="
-				+ company + ", address=" + address + "]";
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
 	
+	
+
 
 }

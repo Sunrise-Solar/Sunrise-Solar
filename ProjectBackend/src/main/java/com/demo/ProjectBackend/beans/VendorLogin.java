@@ -23,7 +23,14 @@ public class VendorLogin {
 	public VendorLogin() {
 		super();
 	}
+	
 
+	public VendorLogin(String email, String password, Vendor vendor) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.vendor = vendor;
+	}
 	public VendorLogin(int loginid, String email, String password, Vendor vendor) {
 		super();
 		this.loginid = loginid;

@@ -8,12 +8,32 @@ public class HomeController {
 	
 	@GetMapping("/register")
 	public String register() {
-		return "register";
+		return "chooseregister";
+	}
+	
+	@GetMapping("/cregister")
+	public String cregister() {
+		return "cregisterform";
+	}
+	
+	@GetMapping("vregister")
+	public String vregister() {
+		return "vregisterform";
 	}
 	
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "chooselogin";
+	}
+	
+	@GetMapping("clogin")
+	public String clogin() {
+		return "cloginform";
+	}
+	
+	@GetMapping("vlogin")
+	public String vlogin() {
+		return "vloginform";
 	}
 	
 	@GetMapping("about")

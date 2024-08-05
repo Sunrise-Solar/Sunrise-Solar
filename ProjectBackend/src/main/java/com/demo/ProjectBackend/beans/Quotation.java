@@ -17,28 +17,29 @@ public class Quotation {
 	@OneToOne
 	private Request request;
 	
+	@OneToOne
 	private Vendor vendor;
 	
 	private double prive;
 	
 	private LocalDate deliverydate;
 	
-	private MultipartFile quote;
+	//private MultipartFile quote;
 
 	public Quotation() {
 		super();
 	}
 
-	public Quotation(int qId, Request request, Vendor vendor, double prive, LocalDate deliverydate,
-			MultipartFile quote) {
-		super();
-		this.qId = qId;
-		this.request = request;
-		this.vendor = vendor;
-		this.prive = prive;
-		this.deliverydate = deliverydate;
-		this.quote = quote;
-	}
+//	public Quotation(int qId, Request request, Vendor vendor, double prive, LocalDate deliverydate,
+//			MultipartFile quote) {
+//		super();
+//		this.qId = qId;
+//		this.request = request;
+//		this.vendor = vendor;
+//		this.prive = prive;
+//		this.deliverydate = deliverydate;
+//		this.quote = quote;
+//	}
 
 	public int getqId() {
 		return qId;
@@ -80,14 +81,14 @@ public class Quotation {
 		this.deliverydate = deliverydate;
 	}
 
-	public MultipartFile getQuote() {
-		return quote;
-	}
-
-	public void setQuote(MultipartFile quote) {
-		this.quote = quote;
-	}
-	
+//	public MultipartFile getQuote() {
+//		return quote;
+//	}
+//
+//	public void setQuote(MultipartFile quote) {
+//		this.quote = quote;
+//	}
+//	
 	
 	
 

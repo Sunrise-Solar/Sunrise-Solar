@@ -1,16 +1,6 @@
-package com.demo.ProjectBackend.beans;
+package com.demo.ProjectBackend.Dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Customer {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int cId;
+public class CustomerDto {
 	
 	private String fName;
 	
@@ -23,23 +13,16 @@ public class Customer {
 	private String city;
 	
 	private String pincode;
+	
+	private String password;
 
-	public Customer() {
+	public CustomerDto() {
 		super();
 	}
+	
+	
 
-	public Customer(int cId, String fName, String lName, String mobile, String email, String city, String pincode) {
-		super();
-		this.cId = cId;
-		this.fName = fName;
-		this.lName = lName;
-		this.mobile = mobile;
-		this.email = email;
-		this.city = city;
-		this.pincode = pincode;
-	}
-
-	public Customer(String fName, String lName, String mobile, String email, String city, String pincode) {
+	public CustomerDto(String fName, String lName, String mobile, String email, String city, String pincode) {
 		super();
 		this.fName = fName;
 		this.lName = lName;
@@ -49,13 +32,21 @@ public class Customer {
 		this.pincode = pincode;
 	}
 
-	public int getcId() {
-		return cId;
+
+
+	public CustomerDto(String fName, String lName, String mobile, String email, String city, String pincode,
+			String password) {
+		super();
+		this.fName = fName;
+		this.lName = lName;
+		this.mobile = mobile;
+		this.email = email;
+		this.city = city;
+		this.pincode = pincode;
+		this.password = password;
 	}
 
-	public void setcId(int cId) {
-		this.cId = cId;
-	}
+
 
 	public String getfName() {
 		return fName;
@@ -105,10 +96,12 @@ public class Customer {
 		this.pincode = pincode;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer [cId=" + cId + ", fName=" + fName + ", lName=" + lName + ", mobile=" + mobile + ", email="
-				+ email + ", city=" + city + ", pincode=" + pincode + "]";
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
