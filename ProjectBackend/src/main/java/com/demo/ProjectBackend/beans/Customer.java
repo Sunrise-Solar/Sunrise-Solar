@@ -1,9 +1,12 @@
 package com.demo.ProjectBackend.beans;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Customer {
@@ -12,16 +15,24 @@ public class Customer {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int cId;
 	
+	@NotBlank(message="Required field!")
 	private String fName;
 	
+	@NotBlank(message="Required field!")
 	private String lName;
 	
+	@NotBlank(message="Required field!")
 	private String mobile;
 	
+	@NotBlank(message="Required field!")
+	@Column(unique=true)
+	@Email(message="Enter valid email id!")
 	private String email;
 	
+	@NotBlank(message="Required field!")
 	private String city;
 	
+	@NotBlank(message="Required field!")
 	private String pincode;
 
 	public Customer() {

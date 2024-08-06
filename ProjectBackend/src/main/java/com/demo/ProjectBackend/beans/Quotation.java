@@ -2,9 +2,14 @@ package com.demo.ProjectBackend.beans;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
@@ -12,6 +17,7 @@ import jakarta.persistence.OneToOne;
 public class Quotation {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int qId;
 	
 	@OneToOne
@@ -21,7 +27,8 @@ public class Quotation {
 	private Vendor vendor;
 	
 	private double prive;
-	
+	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private LocalDate deliverydate;
 	
 	//private MultipartFile quote;

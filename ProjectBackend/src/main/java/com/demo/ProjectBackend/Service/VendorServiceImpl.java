@@ -1,11 +1,17 @@
 package com.demo.ProjectBackend.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.ProjectBackend.Dao.QuotationRepository;
+import com.demo.ProjectBackend.Dao.RequestRepository;
 import com.demo.ProjectBackend.Dao.VendorLoginRepository;
 import com.demo.ProjectBackend.Dao.VendorRepository;
 import com.demo.ProjectBackend.Dto.VendorDto;
+import com.demo.ProjectBackend.beans.Quotation;
+import com.demo.ProjectBackend.beans.Request;
 import com.demo.ProjectBackend.beans.Vendor;
 import com.demo.ProjectBackend.beans.VendorLogin;
 
@@ -16,6 +22,10 @@ public class VendorServiceImpl implements VendorService{
 	private VendorRepository vrepo;
 	@Autowired
 	private VendorLoginRepository vlrepo;
+	@Autowired
+	private QuotationRepository qrepo;
+	@Autowired
+	private RequestRepository rrepo;
 	
 	@Override
 	public Vendor convertFromDto(VendorDto vdto) {
@@ -41,11 +51,25 @@ public class VendorServiceImpl implements VendorService{
 	@Override
 	public VendorLogin authenticate(VendorDto vdto) {
 		VendorLogin vlogin = vlrepo.findByEmail(vdto.getEmail());
-		if(vlogin!=null && vdto.getPassword()==vlogin.getPassword()) {
+		if(vlogin!=null && vdto.getPassword().equals(vlogin.getPassword())) {
 			return vlogin;
 		}else { 
 			return null;
 		}
+	}
+	@Override
+	public Optional<Vendor> getVendor(int getvId) {
+		Optional<Vendor> vendor = vrepo.findById(getvId);
+		return vendor;
+	}
+	@Override
+	public void addQuote(Quotation quotation) {
+		qrepo.save(quotation);		
+	}
+	@Override
+	public Optional<Request> getRequest(Integer attribute) {
+		
+		return rrepo.findById(attribute);
 	}
 	
 

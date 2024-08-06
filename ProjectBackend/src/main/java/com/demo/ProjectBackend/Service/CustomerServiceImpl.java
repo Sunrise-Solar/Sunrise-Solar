@@ -1,13 +1,17 @@
 package com.demo.ProjectBackend.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demo.ProjectBackend.Dao.CustomerLoginRepository;
 import com.demo.ProjectBackend.Dao.CustomerRepository;
+import com.demo.ProjectBackend.Dao.RequestRepository;
 import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.beans.Customer;
 import com.demo.ProjectBackend.beans.CustomerLogin;
+import com.demo.ProjectBackend.beans.Request;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -16,6 +20,8 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerRepository crepo;
 	@Autowired
 	private CustomerLoginRepository clrepo;
+	@Autowired
+	private RequestRepository rrepo;
 	
 	@Override
 	public Customer convertFromDto(CustomerDto cdto) {
@@ -56,6 +62,28 @@ public class CustomerServiceImpl implements CustomerService {
 			return null;
 		}
 	}
+
+
+	@Override
+	public void add(Request req) {
+	
+		rrepo.save(req);
+	}
+
+
+	@Override
+	public Optional<Customer> getCust(int loginid) {
+		
+		return crepo.findById(loginid);
+	}
+
+
+	@Override
+	public void deleteRequest(int id) {
+		rrepo.deleteById(id);
+	}
+
+
 	
 	
 	
