@@ -64,15 +64,15 @@ function VendorRegistrationForm() {
   return (
 
 
-    <div className="container">
+    <div className="container"  style={{backgroundColor:'grey', opacity:'0.9'}}>
     <div className="row">
       <div className="col-6">
-        <p>Customer</p>
+        <p style={{color:'white',fontSize:'40px'}}>Customer</p>
         <hr />
         <CustomerRegistrationForm></CustomerRegistrationForm>
       </div>
       <div className="col-6">
-      <p>Vender</p>
+      <p style={{}}>Vender</p>
       <hr />
 
       <form onSubmit={handleSubmit}>

@@ -41,14 +41,15 @@ function Home() {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <button className="btn btn-success" type="submit">
+              <button className="btn btn-success" type="submit" onClick={() => navigate('/loginform')}>
+              
                 Login
               </button>
               &nbsp;&nbsp;
               <button
                 className="btn btn-info"
                 type="button"
-                onClick={() => navigate('/venderRegistration')}
+                onClick={() => navigate('/VendorRegistration')}
               >
                 Registration
               </button>
