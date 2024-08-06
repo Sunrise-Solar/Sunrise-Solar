@@ -19,6 +19,16 @@ public class VendorDto {
 	public VendorDto() {
 		super();
 	}
+	
+	
+
+	public VendorDto(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+
 
 	public VendorDto(String fName, String lName, String mobile, String email, String company, String address) {
 		super();

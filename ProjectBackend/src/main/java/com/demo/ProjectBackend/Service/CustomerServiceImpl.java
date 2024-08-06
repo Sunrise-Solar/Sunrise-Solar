@@ -17,7 +17,6 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerLoginRepository clrepo;
 	
-	
 	@Override
 	public Customer convertFromDto(CustomerDto cdto) {
 		Customer customer = new Customer(cdto.getfName(),cdto.getlName(), cdto.getMobile(),cdto.getEmail(),cdto.getCity(),cdto.getPincode());
@@ -28,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public CustomerDto convertToDto(Customer cust) {
 		CustomerDto cdto = new CustomerDto(cust.getfName(),cust.getlName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
-		return null;
+		return cdto;
 	}
 
 
@@ -41,9 +40,21 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void addLogin(CustomerDto cDto, Customer customer) {
+		
 		CustomerLogin clogin = new CustomerLogin(cDto.getEmail(),cDto.getPassword(), customer);
 		clrepo.save(clogin);
 		
+	}
+
+
+	@Override
+	public CustomerLogin authenticate(CustomerDto cdto) {
+		CustomerLogin clogin = clrepo.findByEmail(cdto.getEmail());
+		if(clogin!=null && cdto.getPassword().equals(clogin.getPassword())) {
+			return clogin;
+		}else { 
+			return null;
+		}
 	}
 	
 	

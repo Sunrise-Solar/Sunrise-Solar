@@ -4,6 +4,7 @@ import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.Dto.VendorDto;
 import com.demo.ProjectBackend.beans.Customer;
 import com.demo.ProjectBackend.beans.Vendor;
+import com.demo.ProjectBackend.beans.VendorLogin;
 
 public interface VendorService {
 	
@@ -14,5 +15,7 @@ public interface VendorService {
 	void add(Vendor Vendor);
 
 	void addLogin(VendorDto vdto, Vendor vendor);
+
+	VendorLogin authenticate(VendorDto vdto);
 
 }

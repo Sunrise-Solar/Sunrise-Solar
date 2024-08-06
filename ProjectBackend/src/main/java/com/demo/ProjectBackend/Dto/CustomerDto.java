@@ -22,6 +22,14 @@ public class CustomerDto {
 	
 	
 
+	public CustomerDto(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+
+
 	public CustomerDto(String fName, String lName, String mobile, String email, String city, String pincode) {
 		super();
 		this.fName = fName;

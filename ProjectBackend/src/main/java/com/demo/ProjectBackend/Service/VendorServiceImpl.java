@@ -38,6 +38,15 @@ public class VendorServiceImpl implements VendorService{
 		vlrepo.save(vlogin);
 		
 	}
+	@Override
+	public VendorLogin authenticate(VendorDto vdto) {
+		VendorLogin vlogin = vlrepo.findByEmail(vdto.getEmail());
+		if(vlogin!=null && vdto.getPassword()==vlogin.getPassword()) {
+			return vlogin;
+		}else { 
+			return null;
+		}
+	}
 	
 
 }
