@@ -1,7 +1,18 @@
 import React from 'react';
-import styles from './Profile.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import styles from './Profile.css'; // Assuming you have custom CSS for styling
 
-const CustomerProfile = ({ profile }) => {
+const Profile = () => {
+    // Hardcoded profile data
+    const profile = {
+        firstName: 'John',
+        lastName: 'Doe',
+        mobile: '1234567890',
+        email: 'john.doe@example.com',
+        city: 'New York',
+        pincode: '10001'
+    };
+
     return (
         <div className={`container-xl px-4 mt-4 ${styles.container}`}>
             {/* Account page navigation */}
@@ -66,4 +77,4 @@ const CustomerProfile = ({ profile }) => {
     );
 };
 
-export default CustomerProfile;
+export default Profile;

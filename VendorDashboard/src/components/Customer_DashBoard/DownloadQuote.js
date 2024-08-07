@@ -8,11 +8,11 @@ const DownloadQuote = ({ onSubmit }) => {
     };
 
     return (
-        <div>
-            <h2>Download Quote</h2>
+        <div className="container py-4">
+            <h2 className="mb-3">Download Quote</h2>
             <form onSubmit={handleSubmit}>
                 {/* Form fields for downloading a quote */}
-                <button type="submit">Download Quote</button>
+                <button type="submit" className="btn btn-primary mt-3">Download Quote</button>
             </form>
         </div>
     );
