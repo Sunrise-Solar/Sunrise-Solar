@@ -5,5 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.demo.ProjectBackend.beans.CustomerLogin;
 
 public interface CustomerLoginRepository extends CrudRepository<CustomerLogin,Integer>{
+	
+	CustomerLogin findByEmail(String email);
 
 }

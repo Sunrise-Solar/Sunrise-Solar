@@ -1,6 +1,8 @@
 package com.demo.ProjectBackend.beans;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
@@ -8,6 +10,7 @@ import jakarta.persistence.OneToOne;
 public class Request {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int rId;
 	
 	@OneToOne
@@ -24,6 +27,19 @@ public class Request {
 	public Request() {
 		super();
 	}
+	
+	
+
+	public Request(Customer customer, String propertyType, String address, float ebill, float econsum) {
+		super();
+		this.customer = customer;
+		this.propertyType = propertyType;
+		this.address = address;
+		this.ebill = ebill;
+		this.econsum = econsum;
+	}
+
+
 
 	public Request(int rId, Customer customer, String propertyType, String address, float ebill, float econsum) {
 		super();

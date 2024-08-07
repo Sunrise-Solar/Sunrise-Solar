@@ -24,9 +24,8 @@ public class CustomerLogin {
 		super();
 	}
 
-	public CustomerLogin(int loginid, String email, String password, Customer customer) {
+	public CustomerLogin(String email, String password, Customer customer) {
 		super();
-		this.loginid = loginid;
 		this.email = email;
 		this.password = password;
 		this.customer = customer;
