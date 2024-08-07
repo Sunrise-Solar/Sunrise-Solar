@@ -64,99 +64,99 @@ function VendorRegistrationForm() {
   return (
 
 
-    <div className="container"  style={{backgroundColor:'grey', opacity:'0.9'}}>
+    <div className="container" style={{ backgroundColor: 'grey', opacity: '0.9' }}>
     <div className="row">
       <div className="col-6">
-        <p style={{color:'white',fontSize:'40px'}}>Customer</p>
+        <p style={{ color: 'white', fontSize: '40px' }}>Customer</p>
         <hr />
         <CustomerRegistrationForm></CustomerRegistrationForm>
       </div>
       <div className="col-6">
-      <p style={{}}>Vender</p>
-      <hr />
-
-      <form onSubmit={handleSubmit}>
-      <label>
-        First Name:
-        <input
-          type="text"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-          placeholder="Enter first name"
-        />
-        {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
-      </label>
-      <br />
-      <label>
-        Last Name:
-        <input
-          type="text"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-          placeholder="Enter last name"
-        />
-        {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
-      </label>
-      <br />
-      <label>
-        Company ID:
-        <input
-          type="text"
-          value={companyId}
-          onChange={(event) => setCompanyId(event.target.value)}
-          placeholder="Enter company ID"
-        />
-        {errors.companyId && <div style={{ color: 'red' }}>{errors.companyId}</div>}
-      </label>
-      <br />
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="Enter username"
-        />
-        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
-      </label>
-      <br />
-      <label>
-        Mobile Number:
-        <input
-          type="text"
-          value={mobileNumber}
-          onChange={(event) => setMobileNumber(event.target.value)}
-          placeholder="Enter mobile number"
-        />
-        {errors.mobileNumber && <div style={{ color: 'red' }}>{errors.mobileNumber}</div>}
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Enter password"
-        />
-        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-      </label>
-      <br />
-      <label>
-        Confirm Password:
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          placeholder="Enter confirm password"
-        />
-        {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
-      </label>
-      <br />
-      <button type="submit">Register</button>
-    </form>      </div>
+        <p>Vendor</p>
+        <hr />
+        <form onSubmit={handleSubmit}>
+          <label>
+            First Name:
+            <input
+              type="text"
+              value={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              placeholder="Enter first name"
+            />
+            {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
+          </label>
+          <br />
+          <label>
+            Last Name:
+            <input
+              type="text"
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              placeholder="Enter last name"
+            />
+            {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
+          </label>
+          <br />
+          <label>
+            Company ID:
+            <input
+              type="text"
+              value={companyId}
+              onChange={(event) => setCompanyId(event.target.value)}
+              placeholder="Enter company ID"
+            />
+            {errors.companyId && <div style={{ color: 'red' }}>{errors.companyId}</div>}
+          </label>
+          <br />
+          <label>
+            Username:
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="Enter username"
+            />
+            {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
+          </label>
+          <br />
+          <label>
+            Mobile Number:
+            <input
+              type="text"
+              value={mobileNumber}
+              onChange={(event) => setMobileNumber(event.target.value)}
+              placeholder="Enter mobile number"
+            />
+            {errors.mobileNumber && <div style={{ color: 'red' }}>{errors.mobileNumber}</div>}
+          </label>
+          <br />
+          <label>
+            Password:
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter password"
+            />
+            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+          </label>
+          <br />
+          <label>
+            Confirm Password:
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              placeholder="Enter confirm password"
+            />
+            {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
+          </label>
+          <br />
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </div>
-   </div>
+  </div>
 
 
 

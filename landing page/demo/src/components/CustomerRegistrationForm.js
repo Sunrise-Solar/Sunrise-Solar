@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import CustomerRegistrationForm from './CustomerRegistrationForm';
 
-function VendorRegistrationForm() {
+function CustomerRegistrationForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [companyId, setCompanyId] = useState('');
@@ -65,15 +64,6 @@ function VendorRegistrationForm() {
 
 
     <div className="container">
-    <div className="row">
-      <div className="col-6">
-        <p>Customer</p>
-        <hr />
-        <CustomerRegistrationForm></CustomerRegistrationForm>
-      </div>
-      <div className="col-6">
-      <p>Vender</p>
-      <hr />
 
       <form onSubmit={handleSubmit}>
       <label>
@@ -154,10 +144,8 @@ function VendorRegistrationForm() {
       </label>
       <br />
       <button type="submit">Register</button>
-    </form>      </div>
+    </form>  
     </div>
-   </div>
-
 
 
 
@@ -166,4 +154,4 @@ function VendorRegistrationForm() {
   );
 }
 
-export default VendorRegistrationForm;
+export default CustomerRegistrationForm;

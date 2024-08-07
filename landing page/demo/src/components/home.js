@@ -47,12 +47,12 @@ function Home() {
               </button>
               &nbsp;&nbsp;
               <button
-                className="btn btn-info"
-                type="button"
-                onClick={() => navigate('/VendorRegistration')}
-              >
-                Registration
-              </button>
+  className="btn btn-info"
+  type="button"
+  onClick={() => navigate('/vendorRegistration')}
+>
+  Registration
+</button>
             </form>
           </div>
         </div>
