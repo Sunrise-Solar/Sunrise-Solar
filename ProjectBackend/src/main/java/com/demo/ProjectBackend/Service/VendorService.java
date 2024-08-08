@@ -28,4 +28,6 @@ public interface VendorService {
 
 	Optional<Request> getRequest(Integer attribute);
 
+	void deleteQuote(int id);
+
 }

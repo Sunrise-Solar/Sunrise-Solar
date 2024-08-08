@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,35 +26,11 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/vendor")
 public class VendorController {
 	
 	@Autowired
 	private VendorService vservice;
-	
-	@PostMapping("/vsubmit")
-	public String submitvregister(@Valid@RequestBody VendorDto vdto, BindingResult result) {
-		if(result.hasErrors()) {
-			return "vregister";
-		}
-		Vendor vendor = vservice.convertFromDto(vdto);
-		vservice.add(vendor);
-		vservice.addLogin(vdto, vendor);
-		return "home";
-	}
-	
-	@PostMapping("/vlsubmit")
-	public String submitclogin(@RequestBody VendorDto vdto, HttpSession session) {
-		VendorLogin vlogin = vservice.authenticate(vdto);
-		if(vlogin!=null) {
-			Optional<Vendor> vendor1= vservice.getVendor(vlogin.getVendor().getvId());
-			Vendor vendor = vendor1.get();
-			System.out.println("login successfull");
-			session.setAttribute("user", vendor);
-			return "vdashboard";
-		}else {
-			return null;
-		}
-	}
 	
 	@GetMapping("/sendquote/{rid}")
 	public String sendQuote(@PathVariable("rid") int rid, HttpSession session) {
@@ -70,10 +47,16 @@ public class VendorController {
 		Request request = req.get();
 		quotation.setVendor(vendor);
 		quotation.setRequest(request);
-		System.out.println("quotation: "+quotation.getqId()+quotation.getPrive());
+		System.out.println("quotation: "+quotation.getQId()+quotation.getPrive());
 		System.out.println("request: "+request);
 		vservice.addQuote(quotation);
 		return "vdashboard";
+	}
+	
+	@GetMapping("/deletequote/{id}")
+	public String deleteQuote(@PathVariable("id") int id) {
+		vservice.deleteQuote(id);
+		return "dashboard";
 	}
 	
 	@GetMapping("/vlogout")

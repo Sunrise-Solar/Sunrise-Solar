@@ -3,6 +3,7 @@ package com.demo.ProjectBackend.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.demo.ProjectBackend.Dao.QuotationRepository;
@@ -34,7 +35,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 	@Override
 	public VendorDto convertToDto(Vendor vendor) {
-		VendorDto vdto = new VendorDto(vendor.getfName(),vendor.getlName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
+		VendorDto vdto = new VendorDto(vendor.getFName(),vendor.getLName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
 		return vdto;
 	}
 	@Override
@@ -44,7 +45,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 	@Override
 	public void addLogin(VendorDto vdto, Vendor vendor) {
-		VendorLogin vlogin = new VendorLogin(vdto.getEmail(), vdto.getPassword(), vendor);
+		VendorLogin vlogin = new VendorLogin(vdto.getEmail(),vdto.getPassword(), vendor);
 		vlrepo.save(vlogin);
 		
 	}
@@ -70,6 +71,11 @@ public class VendorServiceImpl implements VendorService{
 	public Optional<Request> getRequest(Integer attribute) {
 		
 		return rrepo.findById(attribute);
+	}
+	@Override
+	public void deleteQuote(int id) {
+		qrepo.deleteById(id);
+		
 	}
 	
 

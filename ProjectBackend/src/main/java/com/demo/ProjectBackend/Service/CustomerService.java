@@ -25,6 +25,8 @@ public interface CustomerService {
 
 	void deleteRequest(int id);
 
+	Optional<Request> getRequest(int id);
+
 	
 
 }

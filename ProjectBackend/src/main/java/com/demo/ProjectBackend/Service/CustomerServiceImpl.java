@@ -3,6 +3,7 @@ package com.demo.ProjectBackend.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.demo.ProjectBackend.Dao.CustomerLoginRepository;
@@ -32,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto convertToDto(Customer cust) {
-		CustomerDto cdto = new CustomerDto(cust.getfName(),cust.getlName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
+		CustomerDto cdto = new CustomerDto(cust.getFName(),cust.getFName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
 		return cdto;
 	}
 
@@ -81,6 +82,13 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void deleteRequest(int id) {
 		rrepo.deleteById(id);
+	}
+
+
+	@Override
+	public Optional<Request> getRequest(int id) {
+		Optional<Request> req = rrepo.findById(id);
+		return req;
 	}
 
 
