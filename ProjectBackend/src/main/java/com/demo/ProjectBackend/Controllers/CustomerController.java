@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.Service.CustomerService;
 import com.demo.ProjectBackend.beans.Customer;
-import com.demo.ProjectBackend.beans.CustomerLogin;
 import com.demo.ProjectBackend.beans.Request;
 
 import jakarta.servlet.http.HttpSession;

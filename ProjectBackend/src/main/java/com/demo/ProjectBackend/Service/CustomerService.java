@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.beans.Customer;
-import com.demo.ProjectBackend.beans.CustomerLogin;
 import com.demo.ProjectBackend.beans.Request;
+
+import jakarta.validation.Valid;
 
 public interface CustomerService {
 	
@@ -15,9 +16,6 @@ public interface CustomerService {
 
 	void add(Customer customer);
 
-	void addLogin(CustomerDto cDto, Customer customer);
-
-	CustomerLogin authenticate(CustomerDto cdto);
 
 	void add(Request req);
 
@@ -26,6 +24,8 @@ public interface CustomerService {
 	void deleteRequest(int id);
 
 	Optional<Request> getRequest(int id);
+
+	void addUser(CustomerDto cdto, Customer customer);
 
 	
 

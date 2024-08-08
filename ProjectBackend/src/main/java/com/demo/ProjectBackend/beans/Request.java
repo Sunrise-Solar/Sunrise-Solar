@@ -43,6 +43,10 @@ public class Request {
 		this.ebill = ebill;
 		this.econsum = econsum;
 	}
+
+	
+
+	
 	
 
 }

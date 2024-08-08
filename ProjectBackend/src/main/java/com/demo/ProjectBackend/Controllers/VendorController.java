@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.Dto.VendorDto;
 import com.demo.ProjectBackend.Service.VendorService;
-import com.demo.ProjectBackend.beans.CustomerLogin;
 import com.demo.ProjectBackend.beans.Quotation;
 import com.demo.ProjectBackend.beans.Request;
 import com.demo.ProjectBackend.beans.Vendor;
-import com.demo.ProjectBackend.beans.VendorLogin;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
