@@ -3,15 +3,18 @@ package com.demo.ProjectBackend.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.demo.ProjectBackend.Dao.CustomerLoginRepository;
+
 import com.demo.ProjectBackend.Dao.CustomerRepository;
 import com.demo.ProjectBackend.Dao.RequestRepository;
+import com.demo.ProjectBackend.Dao.UserRepository;
 import com.demo.ProjectBackend.Dto.CustomerDto;
 import com.demo.ProjectBackend.beans.Customer;
-import com.demo.ProjectBackend.beans.CustomerLogin;
+
 import com.demo.ProjectBackend.beans.Request;
+import com.demo.ProjectBackend.beans.User;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -19,9 +22,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository crepo;
 	@Autowired
-	private CustomerLoginRepository clrepo;
-	@Autowired
 	private RequestRepository rrepo;
+	@Autowired
+	private UserRepository urepo;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public Customer convertFromDto(CustomerDto cdto) {
@@ -32,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto convertToDto(Customer cust) {
-		CustomerDto cdto = new CustomerDto(cust.getfName(),cust.getlName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
+		CustomerDto cdto = new CustomerDto(cust.getFName(),cust.getLName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
 		return cdto;
 	}
 
@@ -41,26 +46,6 @@ public class CustomerServiceImpl implements CustomerService {
 	public void add(Customer customer) {
 		
 		crepo.save(customer);
-	}
-
-
-	@Override
-	public void addLogin(CustomerDto cDto, Customer customer) {
-		
-		CustomerLogin clogin = new CustomerLogin(cDto.getEmail(),cDto.getPassword(), customer);
-		clrepo.save(clogin);
-		
-	}
-
-
-	@Override
-	public CustomerLogin authenticate(CustomerDto cdto) {
-		CustomerLogin clogin = clrepo.findByEmail(cdto.getEmail());
-		if(clogin!=null && cdto.getPassword().equals(clogin.getPassword())) {
-			return clogin;
-		}else { 
-			return null;
-		}
 	}
 
 
@@ -81,6 +66,20 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void deleteRequest(int id) {
 		rrepo.deleteById(id);
+	}
+
+
+	@Override
+	public Optional<Request> getRequest(int id) {
+		Optional<Request> req = rrepo.findById(id);
+		return req;
+	}
+
+
+	@Override
+	public void addUser(CustomerDto cdto, Customer customer) {
+		User user = new User(cdto.getEmail(),passwordEncoder.encode(cdto.getPassword()),"customer",customer);
+		urepo.save(user);
 	}
 
 

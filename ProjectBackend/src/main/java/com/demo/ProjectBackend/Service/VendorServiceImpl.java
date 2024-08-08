@@ -3,17 +3,22 @@ package com.demo.ProjectBackend.Service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.demo.ProjectBackend.Dao.QuotationRepository;
 import com.demo.ProjectBackend.Dao.RequestRepository;
-import com.demo.ProjectBackend.Dao.VendorLoginRepository;
+import com.demo.ProjectBackend.Dao.UserRepository;
+
 import com.demo.ProjectBackend.Dao.VendorRepository;
 import com.demo.ProjectBackend.Dto.VendorDto;
 import com.demo.ProjectBackend.beans.Quotation;
 import com.demo.ProjectBackend.beans.Request;
+import com.demo.ProjectBackend.beans.User;
 import com.demo.ProjectBackend.beans.Vendor;
-import com.demo.ProjectBackend.beans.VendorLogin;
+
+
+import jakarta.validation.Valid;
 
 @Service
 public class VendorServiceImpl implements VendorService{
@@ -21,11 +26,13 @@ public class VendorServiceImpl implements VendorService{
 	@Autowired
 	private VendorRepository vrepo;
 	@Autowired
-	private VendorLoginRepository vlrepo;
+	private UserRepository urepo;
 	@Autowired
 	private QuotationRepository qrepo;
 	@Autowired
 	private RequestRepository rrepo;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public Vendor convertFromDto(VendorDto vdto) {
@@ -34,7 +41,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 	@Override
 	public VendorDto convertToDto(Vendor vendor) {
-		VendorDto vdto = new VendorDto(vendor.getfName(),vendor.getlName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
+		VendorDto vdto = new VendorDto(vendor.getFName(),vendor.getLName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
 		return vdto;
 	}
 	@Override
@@ -42,21 +49,7 @@ public class VendorServiceImpl implements VendorService{
 		vrepo.save(vendor);
 		
 	}
-	@Override
-	public void addLogin(VendorDto vdto, Vendor vendor) {
-		VendorLogin vlogin = new VendorLogin(vdto.getEmail(), vdto.getPassword(), vendor);
-		vlrepo.save(vlogin);
-		
-	}
-	@Override
-	public VendorLogin authenticate(VendorDto vdto) {
-		VendorLogin vlogin = vlrepo.findByEmail(vdto.getEmail());
-		if(vlogin!=null && vdto.getPassword().equals(vlogin.getPassword())) {
-			return vlogin;
-		}else { 
-			return null;
-		}
-	}
+	
 	@Override
 	public Optional<Vendor> getVendor(int getvId) {
 		Optional<Vendor> vendor = vrepo.findById(getvId);
@@ -71,6 +64,17 @@ public class VendorServiceImpl implements VendorService{
 		
 		return rrepo.findById(attribute);
 	}
+	@Override
+	public void deleteQuote(int id) {
+		qrepo.deleteById(id);
+		
+	}
+	@Override
+	public void addUser(VendorDto vdto, Vendor vendor) {
+		User user = new User(vdto.getEmail(),passwordEncoder.encode(vdto.getPassword()),"vendor", vendor);
+		urepo.save(user);
+	}
+	
 	
 
 }

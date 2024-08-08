@@ -8,7 +8,9 @@ import com.demo.ProjectBackend.Dto.VendorDto;
 import com.demo.ProjectBackend.beans.Customer;
 import com.demo.ProjectBackend.beans.Quotation;
 import com.demo.ProjectBackend.beans.Vendor;
-import com.demo.ProjectBackend.beans.VendorLogin;
+
+
+import jakarta.validation.Valid;
 
 public interface VendorService {
 	
@@ -18,14 +20,14 @@ public interface VendorService {
 
 	void add(Vendor Vendor);
 
-	void addLogin(VendorDto vdto, Vendor vendor);
-
-	VendorLogin authenticate(VendorDto vdto);
-
 	Optional<Vendor> getVendor(int getvId);
 
 	void addQuote(Quotation quotation);
 
 	Optional<Request> getRequest(Integer attribute);
+
+	void deleteQuote(int id);
+
+	void addUser(@Valid VendorDto vdto, Vendor vendor);
 
 }
