@@ -1,14 +1,43 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
-import styles from './Request.css';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Requests = ({ requests }) => {
+const initialRequests = [
+    {
+        name: 'Alice Johnson',
+        email: 'alice.johnson@example.com',
+        mobile: '1234567890',
+        propertyType: 'Residential',
+        address: '123 Elm Street, Springfield',
+        electricityBill: '$100',
+        electricityConsumption: '500 kWh'
+    },
+    {
+        name: 'Bob Smith',
+        email: 'bob.smith@example.com',
+        mobile: '0987654321',
+        propertyType: 'Commercial',
+        address: '456 Oak Avenue, Metropolis',
+        electricityBill: '$200',
+        electricityConsumption: '1500 kWh'
+    },
+    // Add more hardcoded data as needed
+];
+
+const Requests = () => {
+    const [requests, setRequests] = useState(initialRequests);
+
+    const handleDelete = (index) => {
+        const updatedRequests = requests.filter((_, i) => i !== index);
+        setRequests(updatedRequests);
+    };
+
     return (
-        <div className={`container-xl px-4 mt-4 ${styles.container}`}>
-            <div className={`card mb-4 ${styles.card}`}>
-                <div className={`card-body ${styles.cardBody}`}>
+        <div className="container-xl px-4 mt-4">
+            <div className="card mb-4">
+                <div className="card-body">
                     <h2>Requests</h2>
-                    <table className={`table table-striped ${styles.table}`}>
+                    <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -18,6 +47,7 @@ const Requests = ({ requests }) => {
                                 <th>Address</th>
                                 <th>Electricity Bill</th>
                                 <th>Electricity Consumption</th>
+                                <th>Actions</th> {/* Add Actions column */}
                             </tr>
                         </thead>
                         <tbody>
@@ -30,10 +60,24 @@ const Requests = ({ requests }) => {
                                     <td>{request.address}</td>
                                     <td>{request.electricityBill}</td>
                                     <td>{request.electricityConsumption}</td>
+                                    <td>
+                                        <button 
+                                            className="btn btn-danger" 
+                                            onClick={() => handleDelete(index)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
+                    {/* Button below the table */}
+                    <div className="text-end">
+                        <Link to="/send-request" className="btn btn-primary">
+                            Send Request
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
