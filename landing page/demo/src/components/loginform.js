@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './loginForm.css';
 
-function Loginform() {
+function Loginform({ setUserType }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('vendor');
+  const [userType, setUserTypeLocal] = useState('customer'); // Default user type
   const [errors, setErrors] = useState({});
   const [forgotPassword, setForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const errors = {};
@@ -29,12 +32,16 @@ function Loginform() {
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Submit the form data to the server
-      console.log('Form submitted:', {
-        email,
-        password,
-        userType,
-      });
+      // Hardcoded login validation for demo
+      if (email === 'vendor@example.com' && password === 'password') {
+        setUserType('vendor');
+        navigate('/vendor-dashboard');
+      } else if (email === 'customer@example.com' && password === 'password') {
+        setUserType('customer');
+        navigate('/customer-dashboard');
+      } else {
+        setErrors({ form: 'Invalid email or password' });
+      }
     }
   };
 
@@ -47,83 +54,132 @@ function Loginform() {
     } else {
       // Send forgot password email to the server
       console.log('Forgot password email sent:', forgotPasswordEmail);
+      setForgotPassword(false); // Close the modal after sending the email
     }
   };
 
   return (
-    <div className="container" style={{backgroundColor:'grey',opacity:'1', width:'80%' ,height:'100vh'}}>
-    <div className="row justify-content-center">
-      <div className="col-md-6" style={{color:'black', marginTop:'5rem'}}>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              value={email} style={{backgroundColor:'orange', opacity:'0.5'}}
-              onChange={(event) => setEmail(event.target.value)}
-              placeholder=" Enter email" 
-              className="form-control"
-            />
-            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
-          </div>
-          <div className="form-group">
-            <label>Password:</label>
-            <input
-              type="password"
-              value={password} style={{backgroundColor:'orange', opacity:'0.5'}}
-              onChange={(event) => setPassword(event.target.value)}
-              placeholder="Enter password"
-              className="form-control"
-            />
-            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-          </div>
-          <div className="form-group">
-            <label>User Type:</label>
-            <select
-              value={userType}style={{backgroundColor:'orange', opacity:'0.5'}}
-              onChange={(event) => setUserType(event.target.value)}
-              className="form-control"
-            >
-              <option value="vendor">Vendor</option>
-              <option value="customer">Customer</option>
-            </select>
-          </div>
-          <button type="submit" className="btn btn-primary" style={{marginTop:'2rem'}}>
-            Login
-          </button>
-          <button
-            type="button"
-            className="btn btn-link"
-            onClick={() => setForgotPassword(true)}
-            style={{marginTop:'2rem'}}
-          >
-            Forgot Password?
-          </button>
-        </form>
-        {forgotPassword && (
-          <form onSubmit={handleForgotPassword}>
-            <div className="form-group">
-              <label>Enter your email:</label>
-              <input
-                type="email"
-                value={forgotPasswordEmail}
-                onChange={(event) => setForgotPasswordEmail(event.target.value)}
-                placeholder="Enter email"
-                className="form-control"
-              />
-              {errors.forgotPasswordEmail && (
-                <div style={{ color: 'red' }}>{errors.forgotPasswordEmail}</div>
-              )}
+    <>
+      <section className="h-100 gradient-form" style={{ backgroundColor: '#eee' }}>
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-xl-10">
+              <div className="card rounded-3 text-black">
+                <div className="row g-0">
+                  <div className="col-lg-6">
+                    <div className="card-body p-md-5 mx-md-4">
+                      <div className="text-center">
+                        <img src="solarLogo.webp" style={{ width: '185px' }} alt="logo" />
+                        <h4 className="mt-1 mb-5 pb-1">We are The SunriseSolar Team</h4>
+                      </div>
+                      <form onSubmit={handleSubmit}>
+                        <p>Please login to your account</p>
+                        <div className="form-outline mb-4">
+                          <input
+                            type="email"
+                            id="form2Example11"
+                            className="form-control"
+                            placeholder="Username"
+                            value={email}
+                            onChange={(event) => setEmail(event.target.value)}
+                          />
+                          <label className="form-label" htmlFor="form2Example11">Username</label>
+                          {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+                        </div>
+                        <div className="form-outline mb-4">
+                          <input
+                            type="password"
+                            id="form2Example22"
+                            className="form-control"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(event) => setPassword(event.target.value)}
+                          />
+                          <label className="form-label" htmlFor="form2Example22">Password</label>
+                          {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+                        </div>
+                        <div className="form-outline mb-4">
+                          <select
+                            id="userType"
+                            className="form-control"
+                            value={userType}
+                            onChange={(event) => setUserTypeLocal(event.target.value)}
+                          >
+                            <option value="vendor">Vendor</option>
+                            <option value="customer">Customer</option>
+                          </select>
+                          <label className="form-label" htmlFor="userType">User Type</label>
+                        </div>
+                        <div className="text-center pt-1 mb-5 pb-1">
+                          <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log in</button>
+                          <button
+                            type="button"
+                            className="btn btn-link"
+                            onClick={() => setForgotPassword(true)}
+                          >
+                            Forgot Password?
+                          </button>
+                          {errors.form && <div style={{ color: 'red' }}>{errors.form}</div>}
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center pb-4">
+                          <p className="mb-0 me-2">Don't have an account?</p>
+                          <button type="button" className="btn btn-outline-danger">Create new</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
+                    <div className="text-white px-3 py-4 p-md-5 mx-md-4">
+                      <h4 className="mb-4">Embrace the Power of the Sun: The Future of Energy</h4>
+                      <p className="small mb-0">Imagine a world where energy is clean, abundant, and sourced directly from the sun. 
+                        Solar energy isn't just a vision of the future; it's a powerful, renewable resource transforming our world today.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <button type="submit" className="btn btn-primary">
-              Send Forgot Password Email
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
-  </div>
+          </div>
+        </div>
+      </section>
+
+      {forgotPassword && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Forgot Password</h5>
+              <button type="button" className="close" onClick={() => setForgotPassword(false)}>
+                <span>&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleForgotPassword}>
+                <div className="form-outline mb-4">
+                  <input
+                    type="email"
+                    className="form-control"
+                    value={forgotPasswordEmail}
+                    onChange={(event) => setForgotPasswordEmail(event.target.value)}
+                    placeholder="Enter email"
+                  />
+                  <label className="form-label">Enter your email</label>
+                  {errors.forgotPasswordEmail && (
+                    <div style={{ color: 'red' }}>{errors.forgotPasswordEmail}</div>
+                  )}
+                </div>
+                <button type="submit" className="btn btn-primary">Send Forgot Password Email</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary mt-2"
+                  onClick={() => setForgotPassword(false)}
+                >
+                  Back to Login
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

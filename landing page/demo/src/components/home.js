@@ -1,8 +1,24 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const navigate = useNavigate();
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+
+  const handleLoginClick = (e) => {
+    e.preventDefault();
+    navigate('/loginform');
+  };
+
+  const toggleAboutModal = () => {
+    setShowAboutModal(!showAboutModal);
+  };
+
+  const toggleContactModal = () => {
+    setShowContactModal(!showContactModal);
+  };
 
   return (
     <div className="container-fluid">
@@ -30,26 +46,25 @@ function Home() {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <button className="nav-link btn btn-link" onClick={toggleAboutModal}>
                   About
-                </a>
+                </button>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <button className="nav-link btn btn-link" onClick={toggleContactModal}>
                   Contact
-                </a>
+                </button>
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <button className="btn btn-success" type="submit" onClick={() => navigate('/loginform')}>
-              
+              <button className="btn btn-success" type="button" onClick={handleLoginClick}>
                 Login
               </button>
               &nbsp;&nbsp;
               <button
                 className="btn btn-info"
                 type="button"
-                onClick={() => navigate('/VendorRegistration')}
+                onClick={() => navigate('/registration')}
               >
                 Registration
               </button>
@@ -58,7 +73,7 @@ function Home() {
         </div>
       </nav>
 
-      {/* carousel */}
+      {/* Carousel */}
       <div id="carouselExampleIndicators" className="carousel slide">
         <div className="carousel-indicators">
           <button
@@ -85,26 +100,26 @@ function Home() {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src="Rooftop Solar Home.webp"
+              src="/Rooftop Solar Home.webp"
               style={{ width: "100%", height: "300px" }}
               className="d-block w-100"
-              alt="..."
+              alt="Rooftop Solar Home"
             />
           </div>
           <div className="carousel-item">
             <img
-              src="home.jpg"
+              src="/home.jpg"
               style={{ width: "100%", height: "300px" }}
               className="d-block w-100"
-              alt="..."
+              alt="Home"
             />
           </div>
           <div className="carousel-item">
             <img
-              src="geenandclean.jpg"
+              src="/geenandclean.jpg"
               style={{ width: "100%", height: "300px" }}
               className="d-block w-100"
-              alt="..."
+              alt="Green and Clean"
             />
           </div>
         </div>
@@ -128,14 +143,14 @@ function Home() {
         </button>
       </div>
 
-      {/* how it works */}
+      {/* How It Works */}
       <div className="row mt-3" style={{ backgroundColor: "midnightblue", padding: "8% 0%", margin: "0px" }}>
         <h1 style={{ textAlign: "center", marginBottom: '30px', color: 'white' }}>
-          How does SunriseSolar work?
+          How does Sunrise Solar work?
         </h1>
         <div className="col-4">
           <div className="card">
-            <img src="card1.png" className="card-img-top" alt="..." />
+            <img src="/card1.png" className="card-img-top" alt="Register to get quotes" />
             <div className="card-body">
               <h5 className="card-title">Register to get quotes</h5>
               <p className="card-text">
@@ -146,18 +161,18 @@ function Home() {
         </div>
         <div className="col-4">
           <div className="card">
-            <img src="card2.png" className="card-img-top" alt="..." />
+            <img src="/card2.png" className="card-img-top" alt="Multi-brand quotations" />
             <div className="card-body">
               <h5 className="card-title">Multi-brand quotations</h5>
               <p className="card-text">
-                Receive multi-brand Quotations after completion of your property site assessment.
+                Receive multi-brand quotations after completion of your property site assessment.
               </p>
             </div>
           </div>
         </div>
         <div className="col-4">
           <div className="card">
-            <img src="card3.png" className="card-img-top" alt="..." />
+            <img src="/card3.png" className="card-img-top" alt="Compare Quotes Online" />
             <div className="card-body">
               <h5 className="card-title">Compare Quotes Online</h5>
               <p className="card-text">
@@ -168,14 +183,14 @@ function Home() {
         </div>
       </div>
 
-      {/* card */}
+      {/* Why Solar */}
       <div className="row" style={{ paddingBlock: '2rem', padding: "5% 5%", backgroundColor: "midnightblue" }}>
         <h1 style={{ textAlign: "center", marginBottom: '30px', color: 'white' }}>
           Why Solar?
         </h1>
         <div className="col-3">
           <div className="card">
-            <img src="1st.png" className="card-img-top" alt="..." />
+            <img src="/1st.png" className="card-img-top" alt="Solar Energy is Free" />
             <div className="card-body">
               <h5 className="card-title">Solar Energy is Free</h5>
               <p className="card-text">
@@ -186,7 +201,7 @@ function Home() {
         </div>
         <div className="col-3">
           <div className="card">
-            <img src="2nd.png" className="card-img-top" alt="..." />
+            <img src="/2nd.png" className="card-img-top" alt="Subsidy" />
             <div className="card-body">
               <h5 className="card-title">Subsidy*</h5>
               <p className="card-text">
@@ -197,7 +212,7 @@ function Home() {
         </div>
         <div className="col-3">
           <div className="card">
-            <img src="3rd.png" className="card-img-top" alt="..." />
+            <img src="/3rd.png" className="card-img-top" alt="High ROI" />
             <div className="card-body">
               <h5 className="card-title">High ROI</h5>
               <p className="card-text">
@@ -208,19 +223,19 @@ function Home() {
         </div>
         <div className="col-3">
           <div className="card">
-            <img src="4th.png" className="card-img-top" alt="..." />
+            <img src="/4th.png" className="card-img-top" alt="Green & Clean Energy" />
             <div className="card-body">
               <h5 className="card-title">Green & Clean Energy</h5>
               <p className="card-text">
-                3kW Solar Plant (a typical for a house with a bill of INR 3000) helps reduce ~60 tons of CO2 over its lifetime
+                Solar is a renewable source of energy, as good for your pocket as it is for the environment
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* info */}
-      <div className="row align-items-center text-center">
+      {/* Get Started */}
+      <div className="row align-items-center">
         <div className="col-6">
           <h3>Don't compromise on your quality of life</h3>
           <ul>
@@ -231,21 +246,21 @@ function Home() {
             <li>Get Rooftop Solar and live worry-free about your electricity bills</li>
           </ul>
           <button
-                className="btn btn-info"
-                type="button"
-                onClick={() => navigate('/custRegistration')}
-              >
-                 Get a Free Quote
-              </button>
+            className="btn btn-info"
+            type="button"
+            onClick={() => navigate('/custRegistration')}
+          >
+            Get a Free Quote
+          </button>
         </div>
         <div className="col-6">
-          <img src="happy family.png" style={{ width: "100%" }} alt="" />
+          <img src="/happy family.png" style={{ width: "100%" }} alt="Happy Family" />
         </div>
       </div>
 
       <div className="row align-items-center text-center">
         <div className="col-6">
-          <img src="Mechanic.jpg" style={{ width: "100%" }} alt="" />
+          <img src="/Mechanic.jpg" style={{ width: "100%" }} alt="Mechanic" />
         </div>
         <div className="col-6">
           <h3>Become an Installation Partner</h3>
@@ -256,15 +271,15 @@ function Home() {
           </ul>
           <button
             className="shop-now1"
-            id="Regid2"
-            style={{ marginRight: "5%", marginTop: '2rem' }}
+            type="button"
+            onClick={() => navigate('/vendorRegistration')}
           >
             Become a Partner
           </button>
         </div>
       </div>
 
-      {/* footer */}
+      {/* Footer */}
       <footer className="text-center text-lg-start text-dark" style={{ backgroundColor: '#ECEFF1' }}>
         <section className="d-flex justify-content-between p-3 text-white" style={{ backgroundColor: 'rebeccapurple' }}>
           <div className="me-5">
@@ -304,18 +319,6 @@ function Home() {
               <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold">Products</h6>
                 <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
-                {/* <p>
-                  <a href="#!" className="text-dark">MDBootstrap</a>
-                </p>
-                <p>
-                  <a href="#!" className="text-dark">MDWordPress</a>
-                </p>
-                <p>
-                  <a href="#!" className="text-dark">BrandFlow</a>
-                </p>
-                <p>
-                  <a href="#!" className="text-dark">Bootstrap Angular</a>
-                </p> */}
               </div>
               <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold">Useful links</h6>
@@ -332,7 +335,7 @@ function Home() {
                 <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
                 <p><i className="fas fa-home mr-3"></i> Gokhale Nagar, Pune</p>
                 <p><i className="fas fa-envelope mr-3"></i> pratikgawali2000@gmail.com</p>
-                <p><i className="fas fa-phone mr-3"></i> +91 9028525955 </p>
+                <p><i className="fas fa-phone mr-3"></i> +91 9028525955</p>
                 <p><i className="fas fa-print mr-3"></i> +91 8625058858</p>
               </div>
             </div>
@@ -343,8 +346,105 @@ function Home() {
           <a className="text-dark" href="https://mdbootstrap.com/">Sunrise Solar</a>
         </div>
       </footer>
+
+      {/* About Us Modal */}
+      {showAboutModal && (
+        <div
+          className="modal show d-block"
+          tabIndex="-1"
+          role="dialog"
+          style={{
+            display: 'block',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1050
+          }}
+        >
+          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
+            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+             <div className="modal-header">
+               <h2 className="modal-title" style={{ color: 'midnightblue' }}>Vision</h2>
+               </div>
+              <div className="modal-body">
+               <p style={{ color: 'midnightblue' }}>
+                To power the earth with clean & green energy sources
+                </p>
+              </div>
+              <div className="modal-header">
+                <h2 className="modal-title" style={{ color: 'midnightblue' }}>Mission</h2>
+                
+              </div>
+              <div className="modal-body">
+               <p style={{ color: 'midnightblue' }}>
+                 1.Uniting the customers, installers, and financiers driving sustainability forward!
+                 2.Sunrise Solar is committed to providing the best solar solutions for your home or business.
+                Our team of experts will guide you through the process of choosing the right solar system
+                 and ensure a seamless installation.
+               </p>
+             
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={toggleAboutModal}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Us Modal */}
+      {showContactModal && (
+        <div
+          className="modal show d-block"
+          tabIndex="-1"
+          role="dialog"
+          style={{
+            display: 'block',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1050
+          }}
+        >
+          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
+            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+              <div className="modal-header">
+                <h5 className="modal-title" style={{ color: 'midnightblue' }}>Contact Us</h5>
+                
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" required />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="email" required />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="message" className="form-label">Message</label>
+                    <textarea className="form-control" id="message" rows="4" required></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-primary">Send Message</button>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={toggleContactModal}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Home;
+

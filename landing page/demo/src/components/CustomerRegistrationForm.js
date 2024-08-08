@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
-import CustomerRegistrationForm from './CustomerRegistrationForm';
+import { useNavigate } from 'react-router-dom';
 
-function VendorRegistrationForm() {
+import './registrationForm.css'; 
+
+function CustomerRegistrationForm() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [companyId, setCompanyId] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [pincode, setPincode] = useState('');
   const [username, setUsername] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const errors = {};
-    if (!firstName) {
-      errors.firstName = 'First name is required';
+    if (!firstName) errors.firstName = 'First name is required';
+    if (!lastName) errors.lastName = 'Last name is required';
+    if (!mobile) errors.mobile = 'Mobile number is required';
+    if (!email) {
+      errors.email = 'Email is required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+      errors.email = 'Invalid email address';
     }
-    if (!lastName) {
-      errors.lastName = 'Last name is required';
-    }
-    if (!companyId) {
-      errors.companyId = 'Company ID is required';
-    }
-    if (!username) {
-      errors.username = 'Username is required';
-    }
-    if (!mobileNumber) {
-      errors.mobileNumber = 'Mobile number is required';
-    } else if (!/^\d{10}$/.test(mobileNumber)) {
-      errors.mobileNumber = 'Invalid mobile number';
-    }
+    if (!city) errors.city = 'City is required';
+    if (!pincode) errors.pincode = 'Pincode is required';
+    if (!username) errors.username = 'Username is required';
     if (!password) {
       errors.password = 'Password is required';
     } else if (password.length < 8) {
@@ -49,121 +48,178 @@ function VendorRegistrationForm() {
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Submit the form data to the server
-      console.log('Form submitted:', {
+      // Handle form submission (e.g., send data to server)
+      console.log({
         firstName,
         lastName,
-        companyId,
+        mobile,
+        email,
+        city,
+        pincode,
         username,
-        mobileNumber,
-        password,
+        password
       });
+      navigate('/success'); // Redirect after successful submission
     }
   };
 
   return (
+    <section className="gradient-custom">
+      <div className="container py-5 h-150 ">
+        <div className="row justify-content-center align-items-center h-100">
+          <div className="col-12 col-lg-9 col-xl-7">
+            <div className="card shadow-2-strong card-registration" style={{ borderRadius: '15px' }}>
+              <div className="card-body p-4 p-md-5">
+                <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Customer Registration Form</h3>
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="firstName"
+                          className="form-control form-control-lg"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="firstName">First Name</label>
+                        {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="lastName"
+                          className="form-control form-control-lg"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="lastName">Last Name</label>
+                        {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
+                      </div>
+                    </div>
+                  </div>
 
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="tel"
+                          id="mobile"
+                          className="form-control form-control-lg"
+                          value={mobile}
+                          onChange={(e) => setMobile(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="mobile">Mobile</label>
+                        {errors.mobile && <div style={{ color: 'red' }}>{errors.mobile}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="email"
+                          id="email"
+                          className="form-control form-control-lg"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="email">Email</label>
+                        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+                      </div>
+                    </div>
+                  </div>
 
-    <div className="container">
-    <div className="row">
-      <div className="col-6">
-        <p>Customer</p>
-        <hr />
-        <CustomerRegistrationForm></CustomerRegistrationForm>
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="city"
+                          className="form-control form-control-lg"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="city">City</label>
+                        {errors.city && <div style={{ color: 'red' }}>{errors.city}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="pincode"
+                          className="form-control form-control-lg"
+                          value={pincode}
+                          onChange={(e) => setPincode(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="pincode">Pincode</label>
+                        {errors.pincode && <div style={{ color: 'red' }}>{errors.pincode}</div>}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="username"
+                          className="form-control form-control-lg"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="username">Username</label>
+                        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="password"
+                          id="password"
+                          className="form-control form-control-lg"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="password">Password</label>
+                        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="password"
+                          id="confirmPassword"
+                          className="form-control form-control-lg"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+                        {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-2">
+                    <input
+                      data-mdb-ripple-init
+                      className="btn btn-primary btn-lg"
+                      type="submit"
+                      value="Submit"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="col-6">
-      <p>Vender</p>
-      <hr />
-
-      <form onSubmit={handleSubmit}>
-      <label>
-        First Name:
-        <input
-          type="text"
-          value={firstName}
-          onChange={(event) => setFirstName(event.target.value)}
-          placeholder="Enter first name"
-        />
-        {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
-      </label>
-      <br />
-      <label>
-        Last Name:
-        <input
-          type="text"
-          value={lastName}
-          onChange={(event) => setLastName(event.target.value)}
-          placeholder="Enter last name"
-        />
-        {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
-      </label>
-      <br />
-      <label>
-        Company ID:
-        <input
-          type="text"
-          value={companyId}
-          onChange={(event) => setCompanyId(event.target.value)}
-          placeholder="Enter company ID"
-        />
-        {errors.companyId && <div style={{ color: 'red' }}>{errors.companyId}</div>}
-      </label>
-      <br />
-      <label>
-        Username:
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="Enter username"
-        />
-        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
-      </label>
-      <br />
-      <label>
-        Mobile Number:
-        <input
-          type="text"
-          value={mobileNumber}
-          onChange={(event) => setMobileNumber(event.target.value)}
-          placeholder="Enter mobile number"
-        />
-        {errors.mobileNumber && <div style={{ color: 'red' }}>{errors.mobileNumber}</div>}
-      </label>
-      <br />
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Enter password"
-        />
-        {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-      </label>
-      <br />
-      <label>
-        Confirm Password:
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          placeholder="Enter confirm password"
-        />
-        {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
-      </label>
-      <br />
-      <button type="submit">Register</button>
-    </form>      </div>
-    </div>
-   </div>
-
-
-
-
-
-
+    </section>
   );
 }
 
-export default VendorRegistrationForm;
+export default CustomerRegistrationForm;
