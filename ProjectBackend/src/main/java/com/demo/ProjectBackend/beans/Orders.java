@@ -3,9 +3,9 @@ package com.demo.ProjectBackend.beans;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,28 +25,43 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quotation {
+public class Orders {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int qId;
+	private int oId;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="r_id")
-	private Request request;
+	private String  orderStatus;
 	
+	private String paymentStatus;
+	@OneToOne
+	private Quotation quotation;
+	
+	private String orderDate;
 	@ManyToOne
 	@JoinColumn(name="c_id")
 	private Customer customer;
-	
 	@ManyToOne
 	@JoinColumn(name="v_id")
 	private Vendor vendor;
 	
-	private double price;
-	@DateTimeFormat(pattern="dd-MM-yyyy")
-	@JsonFormat(pattern="dd-MM-yyyy")
-	private LocalDate deliverydate;
+	
+	public Orders(String orderStatus, String paymentStatus, Quotation quotation, String orderDate, Customer customer,
+			Vendor vendor) {
+		super();
+		this.orderStatus = orderStatus;
+		this.paymentStatus = paymentStatus;
+		this.quotation = quotation;
+		this.orderDate = orderDate;
+		this.customer = customer;
+		this.vendor = vendor;
+	}
+
+	
+	
+
+	
+
 	
 
 }

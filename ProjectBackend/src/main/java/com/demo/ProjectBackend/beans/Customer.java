@@ -23,7 +23,7 @@ public class Customer {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int cId;
+	private int CId;
 	
 	@NotBlank(message="Required field!")
 	private String fName;
