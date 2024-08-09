@@ -1,6 +1,6 @@
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavbarToggle } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function Home() {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    navigate('/loginform');
+    navigate("/loginform");
   };
 
   const toggleAboutModal = () => {
@@ -24,8 +24,9 @@ function Home() {
     <div className="container-fluid">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
+          <a classsname=""></a>
           <a className="navbar-brand" href="#">
-            Sunrise Solar
+            <img src="solarLogo.png" alt="" />
           </a>
           <button
             className="navbar-toggler"
@@ -41,30 +42,46 @@ function Home() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a
+                  className="nav-link"
+                  aria-current="page"
+                  href="#"
+                  style={{ fontSize: "bold", fontWeight: " 900" }}>
                   Home
                 </a>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={toggleAboutModal}>
+                <button
+                  className="nav-link btn btn-link"
+                  onClick={toggleAboutModal}
+                  style={{ fontWeight: " 900" }}
+                >
                   About
                 </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={toggleContactModal}>
+                <button
+                  className="nav-link btn btn-link"
+                  onClick={toggleContactModal}
+                  style={{ fontSize: "bold", fontWeight: " 900" }}
+                >
                   Contact
                 </button>
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <button className="btn btn-success" type="button" onClick={handleLoginClick}>
+              <button
+                className="btn btn-success"
+                type="button"
+                onClick={handleLoginClick}
+              >
                 Login
               </button>
               &nbsp;&nbsp;
               <button
                 className="btn btn-info"
                 type="button"
-                onClick={() => navigate('/registration')}
+                onClick={() => navigate("/registration")}
               >
                 Registration
               </button>
@@ -116,7 +133,7 @@ function Home() {
           </div>
           <div className="carousel-item">
             <img
-              src="/geenandclean.jpg"
+              src="/Rooftop Solar Home 2.webp"
               style={{ width: "100%", height: "300px" }}
               className="d-block w-100"
               alt="Green and Clean"
@@ -129,7 +146,10 @@ function Home() {
           data-bs-target="#carouselExampleIndicators"
           data-bs-slide="prev"
         >
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Previous</span>
         </button>
         <button
@@ -138,41 +158,78 @@ function Home() {
           data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next"
         >
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
           <span className="visually-hidden">Next</span>
         </button>
       </div>
 
       {/* How It Works */}
-      <div className="row mt-3" style={{ backgroundColor: "midnightblue", padding: "8% 0%", margin: "0px" }}>
-        <h1 style={{ textAlign: "center", marginBottom: '30px', color: 'white' }}>
+      <div
+        className="row mt-3"
+        style={{ backgroundColor: "midnightblue", padding: "2% 0% 8% 0%" }}
+      >
+        <div
+          className="benifits"
+          style={{ marginBottom: "5rem", backgroundColor: "white" }}
+        >
+          <h1 style={{ textAlign: "center", color: "black" }}>
+            Get Rooftop Solar.
+          </h1>
+          <h2 style={{ textAlign: "center", color: "black" }}>
+            {" "}
+            The most convenient way.
+          </h2>
+          <h4 style={{ textAlign: "center", color: "black" }}>
+            Save Money and our Planet Earth at the same time.
+          </h4>
+        </div>
+        <h1
+          style={{ textAlign: "center", color: "white", marginBottom: "4rem" }}
+        >
           How does Sunrise Solar work?
         </h1>
         <div className="col-4">
-          <div className="card">
-            <img src="/card1.png" className="card-img-top" alt="Register to get quotes" />
+          <div className="card" style={{ height: "100%" }}>
+            <img
+              src="/card1.png"
+              className="card-img-top"
+              alt="Register to get quotes"
+            />
             <div className="card-body">
               <h5 className="card-title">Register to get quotes</h5>
               <p className="card-text">
-                Register from the comfort of your home and complete your property profile
+                Register from the comfort of your home and complete your
+                property profile
               </p>
             </div>
           </div>
         </div>
         <div className="col-4">
-          <div className="card">
-            <img src="/card2.png" className="card-img-top" alt="Multi-brand quotations" />
+          <div className="card" style={{ height: "100%" }}>
+            <img
+              src="/card2.png"
+              className="card-img-top"
+              alt="Multi-brand quotations"
+            />
             <div className="card-body">
               <h5 className="card-title">Multi-brand quotations</h5>
               <p className="card-text">
-                Receive multi-brand quotations after completion of your property site assessment.
+                Receive multi-brand quotations after completion of your property
+                site assessment.
               </p>
             </div>
           </div>
         </div>
         <div className="col-4">
-          <div className="card">
-            <img src="/card3.png" className="card-img-top" alt="Compare Quotes Online" />
+          <div className="card" style={{ height: "100%" }}>
+            <img
+              src="/card3.png"
+              className="card-img-top"
+              alt="Compare Quotes Online"
+            />
             <div className="card-body">
               <h5 className="card-title">Compare Quotes Online</h5>
               <p className="card-text">
@@ -184,50 +241,71 @@ function Home() {
       </div>
 
       {/* Why Solar */}
-      <div className="row" style={{ paddingBlock: '2rem', padding: "5% 5%", backgroundColor: "midnightblue" }}>
-        <h1 style={{ textAlign: "center", marginBottom: '30px', color: 'white' }}>
+      <div
+        className="row"
+        style={{
+          paddingBlock: "2rem",
+          padding: "5% 5%",
+          backgroundColor: "midnightblue",
+        }}
+      >
+        <h1
+          style={{ textAlign: "center", marginBottom: "30px", color: "white" }}
+        >
           Why Solar?
         </h1>
         <div className="col-3">
-          <div className="card">
-            <img src="/1st.png" className="card-img-top" alt="Solar Energy is Free" />
+          <div className="card" style={{ height: "100%" }}>
+            <img
+              src="/1st.png"
+              className="card-img-top"
+              alt="Solar Energy is Free"
+            />
             <div className="card-body">
               <h5 className="card-title">Solar Energy is Free</h5>
               <p className="card-text">
-                Save ~90% on electricity bills, and also make money by selling excess solar units back to the grid
+                Save ~90% on electricity bills, and also make money by selling
+                excess solar units back to the grid
               </p>
             </div>
           </div>
         </div>
         <div className="col-3">
-          <div className="card">
+          <div className="card" style={{ height: "100%" }}>
             <img src="/2nd.png" className="card-img-top" alt="Subsidy" />
             <div className="card-body">
               <h5 className="card-title">Subsidy*</h5>
               <p className="card-text">
-                Government in India has incentives for Solar in terms of Direct Benefit transfer through National Subsidy Portal
+                Government in India has incentives for Solar in terms of Direct
+                Benefit transfer through National Subsidy Portal
               </p>
             </div>
           </div>
         </div>
         <div className="col-3">
-          <div className="card">
+          <div className="card" style={{ height: "100%" }}>
             <img src="/3rd.png" className="card-img-top" alt="High ROI" />
             <div className="card-body">
               <h5 className="card-title">High ROI</h5>
               <p className="card-text">
-                Project pays back in 4-5 yrs, all of the savings in electricity bills post that end up being profit for you
+                Project pays back in 4-5 yrs, all of the savings in electricity
+                bills post that end up being profit for you
               </p>
             </div>
           </div>
         </div>
         <div className="col-3">
-          <div className="card">
-            <img src="/4th.png" className="card-img-top" alt="Green & Clean Energy" />
+          <div className="card" style={{ height: "100%" }}>
+            <img
+              src="/4th.png"
+              className="card-img-top"
+              alt="Green & Clean Energy"
+            />
             <div className="card-body">
               <h5 className="card-title">Green & Clean Energy</h5>
               <p className="card-text">
-                Solar is a renewable source of energy, as good for your pocket as it is for the environment
+                Solar is a renewable source of energy, as good for your pocket
+                as it is for the environment
               </p>
             </div>
           </div>
@@ -240,21 +318,28 @@ function Home() {
           <h3>Don't compromise on your quality of life</h3>
           <ul>
             <li>
-              Stop telling your kids to switch off the AC (air-conditioner) every time they keep it 'On' for long
+              Stop telling your kids to switch off the AC (air-conditioner)
+              every time they keep it 'On' for long
             </li>
             <li>Run your air-conditioner guilt-free.</li>
-            <li>Get Rooftop Solar and live worry-free about your electricity bills</li>
+            <li>
+              Get Rooftop Solar and live worry-free about your electricity bills
+            </li>
           </ul>
           <button
             className="btn btn-info"
             type="button"
-            onClick={() => navigate('/custRegistration')}
+            onClick={() => navigate("/custRegistration")}
           >
             Get a Free Quote
           </button>
         </div>
         <div className="col-6">
-          <img src="/happy family.png" style={{ width: "100%" }} alt="Happy Family" />
+          <img
+            src="/happy family.png"
+            style={{ width: "100%" }}
+            alt="Happy Family"
+          />
         </div>
       </div>
 
@@ -265,14 +350,30 @@ function Home() {
         <div className="col-6">
           <h3>Become an Installation Partner</h3>
           <ul>
-            <li>Grow your business with Frevolt's completed property profile leads.</li>
-            <li>Expand your market with flexible payment options, and solar financing options.</li>
-            <li>Enjoy simple, frictionless tech that helps you manage complex solar projects with the touch of a button from a mobile or from the web.</li>
+            <li>
+              Grow your business with Sunrise solar completed property profile
+              leads.
+            </li>
+            <li>
+              Expand your market with flexible payment options, and solar
+              financing options.
+            </li>
+            <li>
+              Enjoy simple, frictionless tech that helps you manage complex
+              solar projects with the touch of a button from a mobile or from
+              the web.
+            </li>
           </ul>
           <button
-            className="shop-now1"
+            style={{
+              backgroundColor: "#25cff2",
+              border: "none",
+              borderRadius: "5px",
+              padding: "0.35rem 0.2rem",
+              marginBottom: "10px",
+            }}
             type="button"
-            onClick={() => navigate('/vendorRegistration')}
+            onClick={() => navigate("/vendorRegistration")}
           >
             Become a Partner
           </button>
@@ -280,11 +381,12 @@ function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="text-center text-lg-start text-dark" style={{ backgroundColor: '#ECEFF1' }}>
-        <section className="d-flex justify-content-between p-3 text-white" style={{ backgroundColor: 'rebeccapurple' }}>
-          <div className="me-5">
-            <span>Get connected with us on social networks:</span>
-          </div>
+      <footer
+        className="text-center text-lg-start text-dark"
+        style={{ backgroundColor: "#ECEFF1" }}
+      >
+        {/* <section className="d-flex justify-content-between p-3 text-white" style={{ backgroundColor: 'red' }}>
+         
           <div>
             <a href="#" className="text-white me-4">
               <i className="fab fa-facebook-f"></i>
@@ -305,45 +407,60 @@ function Home() {
               <i className="fab fa-github"></i>
             </a>
           </div>
-        </section>
+        </section> */}
         <section>
           <div className="container text-center text-md-start mt-3">
             <div className="row mt-2">
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-2">
                 <h6 className="text-uppercase fw-bold">Sunrise Solar</h6>
-                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
+                <hr
+                  className="mb-4 mt-0 d-inline-block mx-auto"
+                  style={{
+                    width: "60px",
+                    backgroundColor: "#7c4dff",
+                    height: "2px",
+                  }}
+                />
                 <p>
-                  Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Working towards a greener planet and free electricity for all.
                 </p>
               </div>
-              <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold">Products</h6>
-                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
-              </div>
-              <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <h6 className="text-uppercase fw-bold">Useful links</h6>
-                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
-                <p>
-                  <a href="#!" className="text-dark">Your Account</a>
-                </p>
-                <p>
-                  <a href="#!" className="text-dark">Help</a>
-                </p>
-              </div>
+
               <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                 <h6 className="text-uppercase fw-bold">Contact</h6>
-                <hr className="mb-4 mt-0 d-inline-block mx-auto" style={{ width: '60px', backgroundColor: '#7c4dff', height: '2px' }} />
-                <p><i className="fas fa-home mr-3"></i> Gokhale Nagar, Pune</p>
-                <p><i className="fas fa-envelope mr-3"></i> pratikgawali2000@gmail.com</p>
-                <p><i className="fas fa-phone mr-3"></i> +91 9028525955</p>
-                <p><i className="fas fa-print mr-3"></i> +91 8625058858</p>
+                <hr
+                  className="mb-4 mt-0 d-inline-block mx-auto"
+                  style={{
+                    width: "60px",
+                    backgroundColor: "#7c4dff",
+                    height: "2px",
+                  }}
+                />
+                <p>
+                  <i className="fas fa-home mr-3"></i> Gokhale Nagar, Pune
+                </p>
+                <p>
+                  <i className="fas fa-envelope mr-3"></i>{" "}
+                  pratikgawali2000@gmail.com
+                </p>
+                <p>
+                  <i className="fas fa-phone mr-3"></i> +91 9028525955
+                </p>
+                <p>
+                  <i className="fas fa-print mr-3"></i> +91 8625058858
+                </p>
               </div>
             </div>
           </div>
         </section>
-        <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
+        <div
+          className="text-center p-3"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
+        >
           © 2024 Copyright:
-          <a className="text-dark" href="https://mdbootstrap.com/">Sunrise Solar</a>
+          <a className="text-dark" href="https://mdbootstrap.com/">
+            Sunrise Solar
+          </a>
         </div>
       </footer>
 
@@ -354,41 +471,58 @@ function Home() {
           tabIndex="-1"
           role="dialog"
           style={{
-            display: 'block',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            position: 'fixed',
+            display: "block",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            zIndex: 1050
+            zIndex: 1050,
           }}
         >
-          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
-            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
-             <div className="modal-header">
-               <h2 className="modal-title" style={{ color: 'midnightblue' }}>Vision</h2>
-               </div>
+          <div
+            className="modal-dialog"
+            role="document"
+            style={{ maxWidth: "60%", margin: "auto" }}
+          >
+            <div
+              className="modal-content"
+              style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+            >
+              <div className="modal-header">
+                <h2 className="modal-title" style={{ color: "midnightblue" }}>
+                  Vision
+                </h2>
+              </div>
               <div className="modal-body">
-               <p style={{ color: 'midnightblue' }}>
-                To power the earth with clean & green energy sources
+                <p style={{ color: "midnightblue" }}>
+                  To power the earth with clean & green energy sources
                 </p>
               </div>
               <div className="modal-header">
-                <h2 className="modal-title" style={{ color: 'midnightblue' }}>Mission</h2>
-                
+                <h2 className="modal-title" style={{ color: "midnightblue" }}>
+                  Mission
+                </h2>
               </div>
               <div className="modal-body">
-               <p style={{ color: 'midnightblue' }}>
-                 1.Uniting the customers, installers, and financiers driving sustainability forward!
-                 2.Sunrise Solar is committed to providing the best solar solutions for your home or business.
-                Our team of experts will guide you through the process of choosing the right solar system
-                 and ensure a seamless installation.
-               </p>
-             
+                <p style={{ color: "midnightblue" }}>
+                  1.Uniting the customers, installers, and financiers driving
+                  sustainability forward! 2.Sunrise Solar is committed to
+                  providing the best solar solutions for your home or business.
+                  Our team of experts will guide you through the process of
+                  choosing the right solar system and ensure a seamless
+                  installation.
+                </p>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={toggleAboutModal}>Close</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={toggleAboutModal}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -402,41 +536,78 @@ function Home() {
           tabIndex="-1"
           role="dialog"
           style={{
-            display: 'block',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            position: 'fixed',
+            display: "block",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            position: "fixed",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            zIndex: 1050
+            zIndex: 1050,
           }}
         >
-          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
-            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+          <div
+            className="modal-dialog"
+            role="document"
+            style={{ maxWidth: "60%", margin: "auto" }}
+          >
+            <div
+              className="modal-content"
+              style={{ backgroundColor: "rgba(255, 255, 255, 0.9)" }}
+            >
               <div className="modal-header">
-                <h5 className="modal-title" style={{ color: 'midnightblue' }}>Contact Us</h5>
-                
+                <h5 className="modal-title" style={{ color: "midnightblue" }}>
+                  Contact Us
+                </h5>
               </div>
               <div className="modal-body">
                 <form>
                   <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" required />
+                    <label htmlFor="name" className="form-label">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      required
+                    />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" required />
+                    <label htmlFor="email" className="form-label">
+                      Email address
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      required
+                    />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Message</label>
-                    <textarea className="form-control" id="message" rows="4" required></textarea>
+                    <label htmlFor="message" className="form-label">
+                      Message
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id="message"
+                      rows="4"
+                      required
+                    ></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary">Send Message</button>
+                  <button type="submit" className="btn btn-primary">
+                    Send Message
+                  </button>
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={toggleContactModal}>Close</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={toggleContactModal}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -447,4 +618,3 @@ function Home() {
 }
 
 export default Home;
-
