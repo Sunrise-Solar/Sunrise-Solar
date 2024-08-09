@@ -23,7 +23,7 @@ public class Vendor {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int vId;
+	private int VId;
 	
 	@NotBlank(message="Required field!")
 	private String fName;

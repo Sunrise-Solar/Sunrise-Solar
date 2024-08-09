@@ -3,6 +3,7 @@ package com.demo.ProjectBackend.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +35,15 @@ public class CustomUserDetailsService implements UserDetailsService{
 	                return new UsernameNotFoundException("User not found with username: " + username);
 	            });
 	}
+	
+	public User getLoggedInUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            return (User) principal;
+        } else {
+            return null; // Handle the case where the principal is not an instance of UserDetails
+        }
+    }
 
 
 }

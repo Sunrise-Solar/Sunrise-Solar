@@ -1,5 +1,7 @@
 package com.demo.ProjectBackend.Controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +22,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demo.ProjectBackend.Dao.OrderRepository;
+import com.demo.ProjectBackend.Dao.QuotationRepository;
+import com.demo.ProjectBackend.Dao.RequestRepository;
+import com.demo.ProjectBackend.Dao.UserRepository;
+import com.demo.ProjectBackend.Dao.VendorRepository;
 import com.demo.ProjectBackend.Dto.CustomerDto;
+import com.demo.ProjectBackend.Dto.ResponseDTO;
 import com.demo.ProjectBackend.Dto.VendorDto;
 import com.demo.ProjectBackend.Service.CustomerService;
 import com.demo.ProjectBackend.Service.VendorService;
 import com.demo.ProjectBackend.beans.Customer;
 import com.demo.ProjectBackend.beans.JWTRequest;
 import com.demo.ProjectBackend.beans.JWTResponse;
+import com.demo.ProjectBackend.beans.Orders;
+import com.demo.ProjectBackend.beans.Quotation;
+import com.demo.ProjectBackend.beans.Request;
 import com.demo.ProjectBackend.beans.User;
 import com.demo.ProjectBackend.beans.Vendor;
 import com.demo.ProjectBackend.security.JWTHelper;
@@ -48,12 +60,35 @@ public class HomeController {
 
 	private Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	@Autowired
+	private VendorRepository vrepo;
+	@Autowired
+	private UserRepository urepo;
+	@Autowired
+	private QuotationRepository qrepo;
+	@Autowired
+	private RequestRepository rrepo;
+	@Autowired
+	private OrderRepository orepo;
+	
 
 	@Autowired
 	private CustomerService cservice;
 	
 	@Autowired
 	private VendorService vservice;
+	
+	@GetMapping("/test")
+	public ResponseEntity<ResponseDTO> getData(){
+		List<Request> rlist = new ArrayList<>();
+		rrepo.findAll().forEach(rlist::add);
+		List<Quotation> qlist = new ArrayList<>();
+		qrepo.findAll().forEach(qlist::add);
+		List<Orders> olist = new ArrayList<>();
+		orepo.findAll().forEach(olist::add);
+		ResponseDTO rdto = new ResponseDTO(rlist, qlist, olist);
+		return new ResponseEntity<>(rdto,HttpStatus.OK);
+	}
 	
 	@GetMapping("/register")
 	public String register() {
