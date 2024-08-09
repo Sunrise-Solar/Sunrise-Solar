@@ -1,54 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
-
-// const Orders = () => {
-//     const [orders, setOrders] = useState([]);
-
-//     useEffect(() => {
-//         fetch('/api/orders')
-//             .then(response => response.json())
-//             .then(data => setOrders(data))
-//             .catch(error => console.error('Error fetching data:', error));
-//     }, []);
-
-//     return (
-//         <div className="container-xl px-4 mt-4">
-//             <div className="card mb-4">
-//                 <div className="card-body">
-//                     <h2>Orders</h2>
-//                     <table className="table table-striped table-bordered">
-//                         <thead>
-//                             <tr>
-//                                 <th>Oid</th>
-//                                 <th>Qid</th>
-//                                 <th>C name</th>
-//                                 <th>V name</th>
-//                                 <th>Company</th>
-//                                 <th>Site Address</th>
-//                                 <th>Amount</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             {orders.map((order, index) => (
-//                                 <tr key={index}>
-//                                     <td>{order.oid}</td>
-//                                     <td>{order.qid}</td>
-//                                     <td>{order.customerName}</td>
-//                                     <td>{order.vendorName}</td>
-//                                     <td>{order.company}</td>
-//                                     <td>{order.siteAddress}</td>
-//                                     <td>{order.amount}</td>
-//                                 </tr>
-//                             ))}
-//                         </tbody>
-//                     </table>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Orders;
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -65,7 +14,8 @@ const Orders = () => {
                 vendorName: 'John Doe',
                 company: 'Tech Corp',
                 siteAddress: '1234 Elm St, Springfield, USA',
-                amount: '$1500'
+                amount: '$1500',
+                status: 'Pending' // New field added
             },
             {
                 oid: 'ORD002',
@@ -74,7 +24,8 @@ const Orders = () => {
                 vendorName: 'Jane Doe',
                 company: 'Innovate Ltd',
                 siteAddress: '5678 Oak St, Metropolis, USA',
-                amount: '$2000'
+                amount: '$2000',
+                status: 'Completed' // New field added
             },
             {
                 oid: 'ORD003',
@@ -83,12 +34,20 @@ const Orders = () => {
                 vendorName: 'Alice Johnson',
                 company: 'Enterprise Inc',
                 siteAddress: '9101 Pine St, Gotham, USA',
-                amount: '$3000'
+                amount: '$3000',
+                status: 'Pending' // New field added
             }
         ];
 
         setOrders(hardcodedOrders);
     }, []);
+
+    const handleCompletePayment = (oid) => {
+        // Update order status to "Completed"
+        setOrders(orders.map(order =>
+            order.oid === oid ? { ...order, status: 'Completed' } : order
+        ));
+    };
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -100,11 +59,13 @@ const Orders = () => {
                             <tr>
                                 <th>Oid</th>
                                 <th>Qid</th>
-                                <th>C name</th>
-                                <th>V name</th>
+                                <th>C Name</th>
+                                <th>V Name</th>
                                 <th>Company</th>
                                 <th>Site Address</th>
                                 <th>Amount</th>
+                                <th>Status</th> {/* New column */}
+                                <th>Action</th> {/* New column for actions */}
                             </tr>
                         </thead>
                         <tbody>
@@ -117,6 +78,17 @@ const Orders = () => {
                                     <td>{order.company}</td>
                                     <td>{order.siteAddress}</td>
                                     <td>{order.amount}</td>
+                                    <td>{order.status}</td> {/* New status column */}
+                                    <td>
+                                        {order.status === 'Pending' && (
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => handleCompletePayment(order.oid)}
+                                            >
+                                                Complete Payment
+                                            </button>
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

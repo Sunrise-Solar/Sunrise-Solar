@@ -58,6 +58,10 @@ function Loginform({ setUserType }) {
     }
   };
 
+  const handleCreateNew=(e)=>{
+    e.preventDefault();
+    navigate('/Registration');
+  };
   return (
     <>
       <section className="h-100 gradient-form" style={{ backgroundColor: '#eee' }}>
@@ -123,7 +127,7 @@ function Loginform({ setUserType }) {
                         </div>
                         <div className="d-flex align-items-center justify-content-center pb-4">
                           <p className="mb-0 me-2">Don't have an account?</p>
-                          <button type="button" className="btn btn-outline-danger">Create new</button>
+                          <button type="button" className="btn btn-outline-danger" onClick={handleCreateNew}>Create new</button>
                         </div>
                       </form>
                     </div>
@@ -131,7 +135,7 @@ function Loginform({ setUserType }) {
                   <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                       <h4 className="mb-4">Embrace the Power of the Sun: The Future of Energy</h4>
-                      <p className="small mb-0">Imagine a world where energy is clean, abundant, and sourced directly from the sun. 
+                      <p className="small mb-0 text-white">Imagine a world where energy is clean, abundant, and sourced directly from the sun. 
                         Solar energy isn't just a vision of the future; it's a powerful, renewable resource transforming our world today.</p>
                     </div>
                   </div>

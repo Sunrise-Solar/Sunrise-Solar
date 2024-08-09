@@ -78,7 +78,7 @@ const VendorApp = () => {
 
     return (
         <div className="d-flex flex-column min-vh-100">
-            <Navbar className="custom-navbar" variant="dark" expand="lg">
+            <Navbar className="custom-navbar"  expand="lg">
                 <Container className="d-flex justify-content-between align-items-center">
                     <Navbar.Brand className="custom-brand" href="#home">Vendor Dashboard</Navbar.Brand>
                     <Nav>

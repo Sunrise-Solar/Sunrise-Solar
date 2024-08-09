@@ -10,6 +10,8 @@ import CustomerApp from './components/Customer_Dashboard/CustomerApp';
 import Registration from './components/Registration';
 import PlaceOrder from './components/Customer_Dashboard/PlaceOrder';
 import RequestForm from './components/Customer_Dashboard/RequestForm';
+import About from './components/About';
+import Contact from './components/Contact';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -33,7 +35,8 @@ const App = () => {
         <Route path="/registration" element={<Registration />} />
         <Route path="/place-order" element={<PlaceOrder />} /> 
         <Route path="/send-request" element={<RequestForm />} />  
-        
+        <Route path="/Contact" element={<Contact />} /> 
+        <Route path="/About" element={<About />} /> 
         <Route
           path="/vendor-dashboard/*"
           element={

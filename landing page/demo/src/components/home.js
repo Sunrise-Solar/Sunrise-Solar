@@ -1,24 +1,29 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import About from './About';
+import Contact from './Contact';
 
 function Home() {
   const navigate = useNavigate();
-  const [showAboutModal, setShowAboutModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
+  
 
   const handleLoginClick = (e) => {
     e.preventDefault();
     navigate('/loginform');
   };
 
-  const toggleAboutModal = () => {
-    setShowAboutModal(!showAboutModal);
+
+  const handleAboutClick = (e) => {
+    e.preventDefault();
+    navigate('/About');
   };
 
-  const toggleContactModal = () => {
-    setShowContactModal(!showContactModal);
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    navigate('/Contact');
   };
+  
 
   return (
     <div className="container-fluid">
@@ -46,12 +51,12 @@ function Home() {
                 </a>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={toggleAboutModal}>
+                <button className="nav-link btn btn-link" onClick={handleAboutClick}>
                   About
                 </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={toggleContactModal}>
+                <button className="nav-link btn btn-link" onClick={handleContactClick}>
                   Contact
                 </button>
               </li>
@@ -265,7 +270,7 @@ function Home() {
         <div className="col-6">
           <h3>Become an Installation Partner</h3>
           <ul>
-            <li>Grow your business with Frevolt's completed property profile leads.</li>
+            <li>Grow your business with sunrisesolar's completed property profile leads.</li>
             <li>Expand your market with flexible payment options, and solar financing options.</li>
             <li>Enjoy simple, frictionless tech that helps you manage complex solar projects with the touch of a button from a mobile or from the web.</li>
           </ul>
@@ -347,101 +352,7 @@ function Home() {
         </div>
       </footer>
 
-      {/* About Us Modal */}
-      {showAboutModal && (
-        <div
-          className="modal show d-block"
-          tabIndex="-1"
-          role="dialog"
-          style={{
-            display: 'block',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 1050
-          }}
-        >
-          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
-            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
-             <div className="modal-header">
-               <h2 className="modal-title" style={{ color: 'midnightblue' }}>Vision</h2>
-               </div>
-              <div className="modal-body">
-               <p style={{ color: 'midnightblue' }}>
-                To power the earth with clean & green energy sources
-                </p>
-              </div>
-              <div className="modal-header">
-                <h2 className="modal-title" style={{ color: 'midnightblue' }}>Mission</h2>
-                
-              </div>
-              <div className="modal-body">
-               <p style={{ color: 'midnightblue' }}>
-                 1.Uniting the customers, installers, and financiers driving sustainability forward!
-                 2.Sunrise Solar is committed to providing the best solar solutions for your home or business.
-                Our team of experts will guide you through the process of choosing the right solar system
-                 and ensure a seamless installation.
-               </p>
-             
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={toggleAboutModal}>Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Contact Us Modal */}
-      {showContactModal && (
-        <div
-          className="modal show d-block"
-          tabIndex="-1"
-          role="dialog"
-          style={{
-            display: 'block',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 1050
-          }}
-        >
-          <div className="modal-dialog" role="document" style={{ maxWidth: '60%', margin: 'auto' }}>
-            <div className="modal-content" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
-              <div className="modal-header">
-                <h5 className="modal-title" style={{ color: 'midnightblue' }}>Contact Us</h5>
-                
-              </div>
-              <div className="modal-body">
-                <form>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" required />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" required />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="message" className="form-label">Message</label>
-                    <textarea className="form-control" id="message" rows="4" required></textarea>
-                  </div>
-                  <button type="submit" className="btn btn-primary">Send Message</button>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={toggleContactModal}>Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 }

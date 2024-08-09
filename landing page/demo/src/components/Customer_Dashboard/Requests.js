@@ -75,7 +75,7 @@ const Requests = () => {
                     {/* Button below the table */}
                     <div className="text-end">
                         <Link to="/send-request" className="btn btn-primary">
-                            Send Request
+                            Add Request
                         </Link>
                     </div>
                 </div>

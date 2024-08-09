@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const RequestForm = () => {
     const [formData, setFormData] = useState({
-        Cid: '',
+        
         name: '',
         email: '',
         mobile: '',
@@ -25,7 +25,7 @@ const RequestForm = () => {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.Cid) newErrors.Cid = 'Cid is required';
+        
         if (!formData.name) newErrors.name = 'Name is required';
         if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Valid email is required';
         if (!formData.mobile || !/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile number must be 10 digits';
@@ -54,19 +54,7 @@ const RequestForm = () => {
                 </div>
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="Cid" className="form-label">Cid (FK)</label>
-                            <input 
-                                type="text" 
-                                id="Cid" 
-                                name="Cid" 
-                                className={`form-control ${errors.Cid ? 'is-invalid' : ''}`} 
-                                value={formData.Cid}
-                                onChange={handleChange} 
-                                required 
-                            />
-                            {errors.Cid && <div className="invalid-feedback">{errors.Cid}</div>}
-                        </div>
+                        
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name</label>
                             <input 

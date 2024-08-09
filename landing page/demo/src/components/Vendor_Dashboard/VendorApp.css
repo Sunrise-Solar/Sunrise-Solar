@@ -17,15 +17,7 @@
   
 }
 
-.footer {
-  background-color: #001f3f; /* Navy blue background for footer */
-  color: white;
-  text-align: center;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  padding: 10px 0;
-}
+
 
 .home {
   padding: 20px;
