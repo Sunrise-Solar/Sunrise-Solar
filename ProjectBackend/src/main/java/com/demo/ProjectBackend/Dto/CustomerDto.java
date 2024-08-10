@@ -1,19 +1,37 @@
 package com.demo.ProjectBackend.Dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class CustomerDto {
 	
+private int CId;
+	
+	@JsonProperty("firstName")
+	@NotBlank(message="Required field!")
 	private String fName;
 	
+	@JsonProperty("lastName")
+	@NotBlank(message="Required field!")
 	private String lName;
 	
+	@NotBlank(message="Required field!")
 	private String mobile;
 	
+	@NotBlank(message="Required field!")
+	@Email(message="Enter valid email id!")
 	private String email;
 	
+	@NotBlank(message="Required field!")
 	private String city;
 	
+	@NotBlank(message="Required field!")
 	private String pincode;
 	
+	@NotBlank(message="Required field!")
 	private String password;
 
 	public CustomerDto() {

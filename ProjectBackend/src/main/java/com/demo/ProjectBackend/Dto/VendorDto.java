@@ -1,19 +1,30 @@
 package com.demo.ProjectBackend.Dto;
 
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class VendorDto {
 	
-	private String fName;
+private String fName;
 	
+	@NotBlank(message="Required field!")
 	private String lName;
 	
+	@NotBlank(message="Required field!")
 	private String mobile;
 	
+	@NotBlank(message="Required field!")
+	@Email(message="Enter valid email id!")
 	private String email;
-
+	
+	@NotBlank(message="Required field!")
 	private String company;
 	
+	@NotBlank(message="Required field!")
 	private String address;
 	
+	@NotBlank(message="Required field!")
 	private String password;
 
 	public VendorDto() {

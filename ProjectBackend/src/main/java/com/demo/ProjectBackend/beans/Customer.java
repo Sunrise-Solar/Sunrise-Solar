@@ -1,5 +1,7 @@
 package com.demo.ProjectBackend.beans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,25 +26,14 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int CId;
-	
-	@NotBlank(message="Required field!")
+	@JsonProperty("firstName")
 	private String fName;
-	
-	@NotBlank(message="Required field!")
+	@JsonProperty("lastName")
 	private String lName;
-	
-	@NotBlank(message="Required field!")
 	private String mobile;
-	
-	@NotBlank(message="Required field!")
 	@Column(unique=true)
-	@Email(message="Enter valid email id!")
 	private String email;
-	
-	@NotBlank(message="Required field!")
 	private String city;
-	
-	@NotBlank(message="Required field!")
 	private String pincode;
 
 	public Customer(String fName, String lName, String mobile, String email, String city, String pincode) {

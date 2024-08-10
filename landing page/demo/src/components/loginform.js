@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './loginForm.css';
+import axios from 'axios';
 
 function Loginform({ setUserType }) {
   const [email, setEmail] = useState('');
@@ -26,22 +27,36 @@ function Loginform({ setUserType }) {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Hardcoded login validation for demo
-      if (email === 'vendor@example.com' && password === 'password') {
-        setUserType('vendor');
-        navigate('/vendor-dashboard');
-      } else if (email === 'customer@example.com' && password === 'password') {
-        setUserType('customer');
-        navigate('/customer-dashboard');
-      } else {
-        setErrors({ form: 'Invalid email or password' });
+      try {
+        // Handle form submission (e.g., send data to server)
+        const response = await axios.post('http://localhost:8080/login', {
+          email,
+          password
+        });
+        
+        //setSuccess('Registration Successful');
+
+        // Redirect or do something after successful submission
+        if(userType=='customer'){
+          navigate('/customer-dashboard'); // Adjust the route as needed
+        }else{
+          navigate('/vendor-dashboard');
+        }
+        
+      } catch (error) {
+        setErrors({ general: 'Login Failed' });
       }
+  
+      console.log({
+        email,
+        password
+      });
     }
   };
 

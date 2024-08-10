@@ -77,18 +77,7 @@ public class HomeController {
 	
 	@Autowired
 	private VendorService vservice;
-	
-	@GetMapping("/test")
-	public ResponseEntity<ResponseDTO> getData(){
-		List<Request> rlist = new ArrayList<>();
-		rrepo.findAll().forEach(rlist::add);
-		List<Quotation> qlist = new ArrayList<>();
-		qrepo.findAll().forEach(qlist::add);
-		List<Orders> olist = new ArrayList<>();
-		orepo.findAll().forEach(olist::add);
-		ResponseDTO rdto = new ResponseDTO(rlist, qlist, olist);
-		return new ResponseEntity<>(rdto,HttpStatus.OK);
-	}
+
 	
 	@GetMapping("/register")
 	public String register() {
@@ -112,9 +101,12 @@ public class HomeController {
 	
 	@PostMapping("/csubmit")
 	public String submitcregister(@Valid@RequestBody CustomerDto cdto, BindingResult result) {
+		
+		System.out.println(cdto);
 		if(result.hasErrors()) {
 			return "cregister";
 		}
+		
 		Customer customer = cservice.convertFromDto(cdto);
 		cservice.add(customer);
 		cservice.addUser(cdto, customer);

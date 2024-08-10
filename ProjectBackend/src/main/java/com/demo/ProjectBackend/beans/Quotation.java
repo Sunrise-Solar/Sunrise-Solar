@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,8 +44,10 @@ public class Quotation {
 	@JoinColumn(name="v_id")
 	private Vendor vendor;
 	
+	@NotBlank(message="Required field!")
 	private double price;
 	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@NotBlank(message="Required field!")
 	@JsonFormat(pattern="dd-MM-yyyy")
 	private LocalDate deliverydate;
 	

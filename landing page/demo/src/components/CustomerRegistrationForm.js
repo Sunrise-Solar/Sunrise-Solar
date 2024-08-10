@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 import './registrationForm.css'; 
 
 function CustomerRegistrationForm() {
@@ -14,6 +14,7 @@ function CustomerRegistrationForm() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const validateForm = () => {
@@ -42,13 +43,34 @@ function CustomerRegistrationForm() {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Handle form submission (e.g., send data to server)
+      try {
+        // Handle form submission (e.g., send data to server)
+        const response = await axios.post('http://localhost:8080/csubmit', {
+          firstName,
+          lastName,
+          mobile,
+          email,
+          city,
+          pincode,
+          password
+        });
+        
+        setSuccess('Registration Successful');
+
+        // Redirect or do something after successful submission
+         navigate('/loginform'); // Adjust the route as needed
+      } catch (error) {
+        setErrors({ general: 'Registration Failed' });
+      }
+  
       console.log({
         firstName,
         lastName,
@@ -56,13 +78,11 @@ function CustomerRegistrationForm() {
         email,
         city,
         pincode,
-        username,
         password
       });
-      navigate('/success'); // Redirect after successful submission
     }
   };
-
+  
   return (
     <section className="gradient-custom">
       <div className="container py-5 h-150 ">
@@ -211,8 +231,10 @@ function CustomerRegistrationForm() {
                       type="submit"
                       value="Submit"
                     />
+                    {success && <div style={{ color: 'green' }}>{success}</div>}
                   </div>
                 </form>
+                
               </div>
             </div>
           </div>
