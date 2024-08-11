@@ -31,28 +31,30 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/custRegistration" element={<CustomerRegistrationForm />} />
         <Route path="/vendorRegistration" element={<VendorRegistrationForm />} />
-        <Route path="/loginform" element={<Loginform setUserType={setUserType} />} />
+        <Route path="/loginform" element={<Loginform />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/place-order" element={<PlaceOrder />} /> 
         <Route path="/send-request" element={<RequestForm />} />  
         <Route path="/Contact" element={<Contact />} /> 
         <Route path="/About" element={<About />} /> 
-        <Route
-          path="/vendor-dashboard/*"
+        
+        <Route 
+          path="/vendor-dashboard" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role="vendor">
               <VendorApp />
             </ProtectedRoute>
-          }
+          } 
         />
-        <Route
-          path="/customer-dashboard/*"
+        <Route 
+          path="/customer-dashboard" 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role="customer">
               <CustomerApp />
             </ProtectedRoute>
-          }
+          } 
         />
+        
       </Routes>
     </Router>
   );

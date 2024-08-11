@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './loginForm.css';
 
 function Loginform({ setUserType }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserTypeLocal] = useState('customer'); // Default user type
   const [errors, setErrors] = useState({});
   const [forgotPassword, setForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
@@ -26,26 +26,51 @@ function Loginform({ setUserType }) {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
+
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Hardcoded login validation for demo
-      if (email === 'vendor@example.com' && password === 'password') {
-        setUserType('vendor');
-        navigate('/vendor-dashboard');
-      } else if (email === 'customer@example.com' && password === 'password') {
-        setUserType('customer');
-        navigate('/customer-dashboard');
-      } else {
+      try {
+        // Send login request to the backend
+        const response = await axios.post('http://localhost:8282/login', {
+          email,
+          password,
+        }, {
+          headers: {
+            'Content-Type': 'application/json',  // Ensure this header is set
+          },
+        });
+        
+        // Extract the token and role from the response
+        const { token, role } = response.data;
+
+        if (!token || !role) {
+          throw new Error('Login failed: Token or role missing in response');
+        }
+
+        // Save the token to localStorage or sessionStorage
+        localStorage.setItem('token', token);
+
+        // Set the user type and navigate to the appropriate dashboard
+        setUserType(role);
+        if (role === 'vendor') {
+          navigate('/VendorApp');
+        } else if (role === 'customer') {
+          navigate('/CustomerApp');
+        } else {
+          navigate('/'); // Default fallback if role is unrecognized
+        }
+
+      } catch (error) {
         setErrors({ form: 'Invalid email or password' });
       }
     }
   };
 
-  const handleForgotPassword = (event) => {
+  const handleForgotPassword = async (event) => {
     event.preventDefault();
     if (!forgotPasswordEmail) {
       setErrors({ forgotPasswordEmail: 'Email is required' });
@@ -53,15 +78,21 @@ function Loginform({ setUserType }) {
       setErrors({ forgotPasswordEmail: 'Invalid email address' });
     } else {
       // Send forgot password email to the server
-      console.log('Forgot password email sent:', forgotPasswordEmail);
-      setForgotPassword(false); // Close the modal after sending the email
+      try {
+        await axios.post('http://your-api-url.com/forgot-password', { email: forgotPasswordEmail });
+        console.log('Forgot password email sent:', forgotPasswordEmail);
+        setForgotPassword(false); // Close the modal after sending the email
+      } catch (error) {
+        setErrors({ forgotPasswordEmail: 'Failed to send email. Please try again.' });
+      }
     }
   };
 
-  const handleCreateNew=(e)=>{
+  const handleCreateNew = (e) => {
     e.preventDefault();
     navigate('/Registration');
   };
+
   return (
     <>
       <section className="h-100 gradient-form" style={{ backgroundColor: '#eee' }}>
@@ -101,18 +132,6 @@ function Loginform({ setUserType }) {
                           />
                           <label className="form-label" htmlFor="form2Example22">Password</label>
                           {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-                        </div>
-                        <div className="form-outline mb-4">
-                          <select
-                            id="userType"
-                            className="form-control"
-                            value={userType}
-                            onChange={(event) => setUserTypeLocal(event.target.value)}
-                          >
-                            <option value="vendor">Vendor</option>
-                            <option value="customer">Customer</option>
-                          </select>
-                          <label className="form-label" htmlFor="userType">User Type</label>
                         </div>
                         <div className="text-center pt-1 mb-5 pb-1">
                           <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log in</button>
