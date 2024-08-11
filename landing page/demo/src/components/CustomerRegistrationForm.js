@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
 import './registrationForm.css'; 
 
 function CustomerRegistrationForm() {
@@ -68,7 +67,7 @@ function CustomerRegistrationForm() {
       }
     }
   };
-
+  
   return (
     <section className="gradient-custom">
       <div className="container py-5 h-150 ">
@@ -201,8 +200,10 @@ function CustomerRegistrationForm() {
                       type="submit"
                       value="Submit"
                     />
+                    {success && <div style={{ color: 'green' }}>{success}</div>}
                   </div>
                 </form>
+                
               </div>
             </div>
           </div>

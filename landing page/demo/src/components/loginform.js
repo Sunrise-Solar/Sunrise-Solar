@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './loginForm.css';
 
+
 function Loginform({ setUserType }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,6 +68,11 @@ function Loginform({ setUserType }) {
       } catch (error) {
         setErrors({ form: 'Invalid email or password' });
       }
+  
+      console.log({
+        email,
+        password
+      });
     }
   };
 
