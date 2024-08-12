@@ -86,5 +86,36 @@ public class VendorController {
 		return new ResponseEntity<>(rdto,HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("/getVendor")
+	public ResponseEntity<Vendor> getVendor(){
+		User user = uservice.getLoggedInUser();
+	    Vendor vendor = user.getVendor();
+		return new ResponseEntity<>(vendor,HttpStatus.OK);
+		}
+	
+	@GetMapping("/getrequests")
+	public ResponseEntity<List<Request>> getRequest(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Request> rlist = vservice.getAll();
+		return new ResponseEntity<>(rlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getquotes")
+	public ResponseEntity<List<Quotation>> getQuotes(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Quotation> qlist = vservice.getQuotationByVendorId(vendor.getVId());
+		return new ResponseEntity<>(qlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getorders")
+	public ResponseEntity<List<Orders>> getOrders(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Orders> olist = vservice.getOrderByVendorId(vendor.getVId());
+		return new ResponseEntity<>(olist,HttpStatus.OK);
+	}
 
 }

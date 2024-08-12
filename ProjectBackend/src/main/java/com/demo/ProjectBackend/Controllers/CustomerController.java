@@ -116,5 +116,36 @@ public class CustomerController {
 		return new ResponseEntity<>(rdto,HttpStatus.OK);
 		
 	}
+	
+	@GetMapping("/getcustomer")
+	public ResponseEntity<Customer> getCustomer(){
+		User user = uservice.getLoggedInUser();
+		Customer customer = user.getCustomer();
+		return new ResponseEntity<>(customer,HttpStatus.OK);
+		}
+	
+	@GetMapping("/getrequests")
+	public ResponseEntity<List<Request>> getRequest(){
+		User user = uservice.getLoggedInUser();
+		Customer customer = user.getCustomer();
+		List<Request> rlist = cservice.getRequestsByCustomerId(customer.getCId());
+		return new ResponseEntity<>(rlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getquotes")
+	public ResponseEntity<List<Quotation>> getQuotes(){
+		User user = uservice.getLoggedInUser();
+		Customer customer = user.getCustomer();
+		List<Quotation> qlist = cservice.getQuotationByCustomerId(customer.getCId());
+		return new ResponseEntity<>(qlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getorders")
+	public ResponseEntity<List<Orders>> getOrders(){
+		User user = uservice.getLoggedInUser();
+		Customer customer = user.getCustomer();
+		List<Orders> olist = cservice.getOrderById(customer.getCId());
+		return new ResponseEntity<>(olist,HttpStatus.OK);
+	}
 
 }
