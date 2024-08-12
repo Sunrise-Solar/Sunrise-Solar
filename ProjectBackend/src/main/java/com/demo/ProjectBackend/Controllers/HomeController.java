@@ -134,10 +134,11 @@ public class HomeController {
 	        User user = (User) userDetailsService.loadUserByUsername(request.getEmail());
 	        String token = this.helper.generateToken(user);
 	        System.out.println(user);
-	        JWTResponse response = JWTResponse.builder()
-	                .token(token)
-	                .username(user.getUsername())
-	                .role(user.getRole())
+	        
+	        JWTResponse response = new JWTResponse.Builder()
+	                .setToken(token)
+	                .setUsername(user.getUsername())
+	                .setRole(user.getRole())
 	                .build();
 	        return new ResponseEntity<>(response, HttpStatus.OK);
 	    }

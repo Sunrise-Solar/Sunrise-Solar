@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './registrationForm.css'; // Custom CSS file if needed
+import { useNavigate } from 'react-router';
 
 function VendorRegistrationForm() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [companyId, setCompanyId] = useState('');
-  const [username, setUsername] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [fName, setFName] = useState('');
+  const [lName, setLName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [email, setEmail] = useState('');
+  const [company, setCompany] = useState('');
+  const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const errors = {};
-    if (!firstName) errors.firstName = 'First name is required';
-    if (!lastName) errors.lastName = 'Last name is required';
-    if (!companyId) errors.companyId = 'Company ID is required';
-    if (!username) errors.username = 'Username is required';
-    if (!mobileNumber) errors.mobileNumber = 'Mobile number is required';
-    else if (!/^\d{10}$/.test(mobileNumber)) errors.mobileNumber = 'Invalid mobile number';
+    if (!fName) errors.fName = 'First name is required';
+    if (!lName) errors.lName = 'Last name is required';
+    if (!mobile) errors.mobile = 'Mobile number is required';
+    else if (!/^\d{10}$/.test(mobile)) errors.mobile = 'Invalid mobile number';
+    if (!email) errors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Invalid email address';
+    if (!company) errors.company = 'Company name is required';
+    if (!address) errors.address = 'Address is required';
     if (!password) errors.password = 'Password is required';
     else if (password.length < 8) errors.password = 'Password must be at least 8 characters long';
     if (!confirmPassword) errors.confirmPassword = 'Confirm password is required';
@@ -27,26 +34,35 @@ function VendorRegistrationForm() {
     return errors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
     } else {
-      // Submit the form data to the server
-      console.log('Form submitted:', {
-        firstName,
-        lastName,
-        companyId,
-        username,
-        mobileNumber,
-        password,
-      });
+      try {
+        // Handle form submission (e.g., send data to server)
+        const response = await axios.post('http://localhost:8282/vsubmit', {
+          fName,
+          lName,
+          mobile,
+          email,
+          company,
+          address,
+          password,
+        });
+        
+        setSuccess('Registration Successful');
+        navigate('/loginform'); 
+        console.log('Vendor registered:', response.data);
+      } catch (error) {
+        console.error('There was an error registering the vendor!', error);
+      }
     }
   };
 
   return (
-    <section className=" gradient-custom">
+    <section className="gradient-custom">
       <div className="container py-5 h-100">
         <div className="row justify-content-center align-items-center h-100">
           <div className="col-12 col-lg-9 col-xl-7">
@@ -54,31 +70,32 @@ function VendorRegistrationForm() {
               <div className="card-body p-4 p-md-5">
                 <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Vendor Registration Form</h3>
                 <form onSubmit={handleSubmit}>
+                  {/* Form Fields */}
                   <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="firstName"
+                          id="fName"
                           className="form-control form-control-lg"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
+                          value={fName}
+                          onChange={(e) => setFName(e.target.value)}
                         />
-                        <label className="form-label" htmlFor="firstName">First Name</label>
-                        {errors.firstName && <div style={{ color: 'red' }}>{errors.firstName}</div>}
+                        <label className="form-label" htmlFor="fName">First Name</label>
+                        {errors.fName && <div style={{ color: 'red' }}>{errors.fName}</div>}
                       </div>
                     </div>
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="lastName"
+                          id="lName"
                           className="form-control form-control-lg"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
+                          value={lName}
+                          onChange={(e) => setLName(e.target.value)}
                         />
-                        <label className="form-label" htmlFor="lastName">Last Name</label>
-                        {errors.lastName && <div style={{ color: 'red' }}>{errors.lastName}</div>}
+                        <label className="form-label" htmlFor="lName">Last Name</label>
+                        {errors.lName && <div style={{ color: 'red' }}>{errors.lName}</div>}
                       </div>
                     </div>
                   </div>
@@ -88,26 +105,26 @@ function VendorRegistrationForm() {
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="companyId"
+                          id="mobile"
                           className="form-control form-control-lg"
-                          value={companyId}
-                          onChange={(e) => setCompanyId(e.target.value)}
+                          value={mobile}
+                          onChange={(e) => setMobile(e.target.value)}
                         />
-                        <label className="form-label" htmlFor="companyId">Company ID</label>
-                        {errors.companyId && <div style={{ color: 'red' }}>{errors.companyId}</div>}
+                        <label className="form-label" htmlFor="mobile">Mobile Number</label>
+                        {errors.mobile && <div style={{ color: 'red' }}>{errors.mobile}</div>}
                       </div>
                     </div>
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
-                          type="text"
-                          id="username"
+                          type="email"
+                          id="email"
                           className="form-control form-control-lg"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
-                        <label className="form-label" htmlFor="username">Username</label>
-                        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
+                        <label className="form-label" htmlFor="email">Email</label>
+                        {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                       </div>
                     </div>
                   </div>
@@ -117,15 +134,31 @@ function VendorRegistrationForm() {
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="mobileNumber"
+                          id="company"
                           className="form-control form-control-lg"
-                          value={mobileNumber}
-                          onChange={(e) => setMobileNumber(e.target.value)}
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
                         />
-                        <label className="form-label" htmlFor="mobileNumber">Mobile Number</label>
-                        {errors.mobileNumber && <div style={{ color: 'red' }}>{errors.mobileNumber}</div>}
+                        <label className="form-label" htmlFor="company">Company</label>
+                        {errors.company && <div style={{ color: 'red' }}>{errors.company}</div>}
                       </div>
                     </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="address"
+                          className="form-control form-control-lg"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                        <label className="form-label" htmlFor="address">Address</label>
+                        {errors.address && <div style={{ color: 'red' }}>{errors.address}</div>}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
@@ -139,9 +172,6 @@ function VendorRegistrationForm() {
                         {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
@@ -159,6 +189,7 @@ function VendorRegistrationForm() {
 
                   <div className="mt-4 pt-2">
                     <button type="submit" className="btn btn-primary btn-lg">Register</button>
+                   {success && <div style={{ color: 'green', marginTop: '20px' }}>Registration successful!</div>}
                   </div>
                 </form>
               </div>

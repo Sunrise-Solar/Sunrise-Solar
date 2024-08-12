@@ -2,6 +2,7 @@ package com.demo.ProjectBackend.beans;
 
 import java.time.LocalDate;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,23 +14,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class Orders {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int oId;
+	
 	
 	private String  orderStatus;
 	
@@ -55,6 +48,89 @@ public class Orders {
 		this.orderDate = orderDate;
 		this.customer = customer;
 		this.vendor = vendor;
+	}
+
+
+	public Orders() {
+		super();
+	}
+
+
+	public int getoId() {
+		return oId;
+	}
+
+
+	public void setoId(int oId) {
+		this.oId = oId;
+	}
+
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+
+
+	public Quotation getQuotation() {
+		return quotation;
+	}
+
+
+	public void setQuotation(Quotation quotation) {
+		this.quotation = quotation;
+	}
+
+
+	public String getOrderDate() {
+		return orderDate;
+	}
+
+
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
+	}
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public Vendor getVendor() {
+		return vendor;
+	}
+
+
+	public void setVendor(Vendor vendor) {
+		this.vendor = vendor;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Orders [oId=" + oId + ", orderStatus=" + orderStatus + ", paymentStatus=" + paymentStatus
+				+ ", quotation=" + quotation + ", orderDate=" + orderDate + ", customer=" + customer + ", vendor="
+				+ vendor + "]";
 	}
 
 	

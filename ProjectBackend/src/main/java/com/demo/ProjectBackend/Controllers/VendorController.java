@@ -1,3 +1,4 @@
+
 package com.demo.ProjectBackend.Controllers;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class VendorController {
 		quotation.setCustomer(customer);
 		quotation.setVendor(vendor);
 		quotation.setRequest(request);
-		System.out.println("quotation: "+quotation.getQId()+quotation.getPrice());
+		System.out.println("quotation: "+quotation.getqId()+quotation.getPrice());
 		System.out.println("request: "+request);
 		vservice.addQuote(quotation);
 		return "vdashboard";

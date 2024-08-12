@@ -1,24 +1,21 @@
 package com.demo.ProjectBackend.beans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.validation.constraints.NotNull;
+
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Request {
 	
 	@Id
@@ -29,13 +26,23 @@ public class Request {
 	@JoinColumn(name="c_id")
 	private Customer customer;
 	
-	@NotBlank(message="Required field!")
+	//@NotBlank(message="Required field!")
 	private String propertyType;
-	@NotBlank(message="Required field!")
+	
+	
+	//@NotBlank(message="Required field!")
 	private String address;
-	@NotBlank(message="Required field!")
+	
+	@NotNull(message = "Electricity Bill cannot be null")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Electricity Bill must be a positive number")
+	//@NotBlank(message="Required field!")
+	@JsonProperty("electricityBill")
 	private float ebill;
-	@NotBlank(message="Required field!")
+	
+	@NotNull(message = "Electricity Consumption cannot be null")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Electricity Consumption must be a positive number")
+	@JsonProperty("electricityConsumption")
+	//@NotBlank(message="Required field!")
 	private float econsum;
 	
 
@@ -46,6 +53,78 @@ public class Request {
 		this.address = address;
 		this.ebill = ebill;
 		this.econsum = econsum;
+	}
+
+
+	public Request() {
+		super();
+	}
+
+
+	public int getrId() {
+		return rId;
+	}
+
+
+	public void setrId(int rId) {
+		this.rId = rId;
+	}
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+	public String getPropertyType() {
+		return propertyType;
+	}
+
+
+	public void setPropertyType(String propertyType) {
+		this.propertyType = propertyType;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public float getEbill() {
+		return ebill;
+	}
+
+
+	public void setEbill(float ebill) {
+		this.ebill = ebill;
+	}
+
+
+	public float getEconsum() {
+		return econsum;
+	}
+
+
+	public void setEconsum(float econsum) {
+		this.econsum = econsum;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Request [rId=" + rId + ", customer=" + customer + ", propertyType=" + propertyType + ", address="
+				+ address + ", ebill=" + ebill + ", econsum=" + econsum + "]";
 	}
 
 	

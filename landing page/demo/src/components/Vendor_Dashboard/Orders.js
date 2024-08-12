@@ -1,50 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Orders.css'; // Import custom styles if needed
 
 const Orders = () => {
-    // Hardcoded data for orders
-    const initialOrders = [
-        {
-            orderId: 'ORD001',
-            Oid: 'ORD001',
-            Qid: 'QID001',
-            Cname: 'Alice Smith',
-            Vname: 'John Doe',
-            Company: 'Tech Corp',
-            SiteAddress: '1234 Elm St, Springfield, USA',
-            Amount: '$1500',
-            Status: 'Pending'
-        },
-        {
-            orderId: 'ORD002',
-            Oid: 'ORD002',
-            Qid: 'QID002',
-            Cname: 'Bob Johnson',
-            Vname: 'Jane Doe',
-            Company: 'Innovate Ltd',
-            SiteAddress: '5678 Oak St, Metropolis, USA',
-            Amount: '$2000',
-            Status: 'Completed'
-        },
-        {
-            orderId: 'ORD003',
-            Oid: 'ORD003',
-            Qid: 'QID003',
-            Cname: 'Charlie Brown',
-            Vname: 'Alice Johnson',
-            Company: 'Enterprise Inc',
-            SiteAddress: '9101 Pine St, Gotham, USA',
-            Amount: '$3000',
-            Status: 'Pending'
-        }
-    ];
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    const [orders, setOrders] = useState(initialOrders);
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
+
+                const response = await axios.get('http://localhost:8282/vendor/getorders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                setOrders(response.data);
+                setLoading(false);
+            } catch (err) {
+                setError('Error fetching orders.');
+                setLoading(false);
+            }
+        };
+
+        fetchOrders();
+    }, []);
 
     const handleRequestPayment = (orderId) => {
         // Update order status to "Completed"
         setOrders(orders.map(order =>
-            order.orderId === orderId ? { ...order, Status: 'Completed' } : order
+            order.orderId === orderId ? { ...order, status: 'Completed' } : order
         ));
     };
 
@@ -52,10 +43,18 @@ const Orders = () => {
         'Oid', 'Qid', 'C name', 'V name', 'Company', 'Site Address', 'Amount', 'Status', 'Action'
     ];
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
     return (
         <div className="orders">
             <h2>Orders</h2>
-            <table className="table table-striped">
+            <table className="table table-striped table-bordered">
                 <thead>
                     <tr>
                         {columns.map((column) => (

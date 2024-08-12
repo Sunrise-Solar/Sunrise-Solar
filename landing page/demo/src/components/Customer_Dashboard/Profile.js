@@ -1,73 +1,109 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
-import styles from './Profile.css'; // Assuming you have custom CSS for styling
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Profile.css';
 
 const Profile = () => {
-    // Hardcoded profile data
-    const profile = {
-        firstName: 'John',
-        lastName: 'Doe',
-        mobile: '1234567890',
-        email: 'john.doe@example.com',
-        city: 'New York',
-        pincode: '10001'
-    };
+    const [profile, setProfile] = useState(null);
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
+
+                const response = await axios.get('http://localhost:8282/customer/getcustomer', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+
+                console.log('Fetched profile data:', response.data);
+
+                const customerData = response.data;
+
+                // Assuming these are the fields in your Customer object
+                const profileData = {
+                    firstName: customerData.firstName || 'John',
+                    lastName: customerData.lastName || 'Doe',
+                    mobile: customerData.mobile || '1234567890',
+                    email: customerData.email || 'john.doe@example.com',
+                    city: customerData.city || 'New York',
+                    pincode: customerData.pincode || '10001'
+                };
+
+                setProfile(profileData);
+
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+        fetchProfile();
+    }, []); 
+
+    if (!profile) {
+        return <div>Loading...</div>;
+    }
 
     return (
-        <div className={`container-xl px-4 mt-4 ${styles.container}`}>
+        <div className="container-xl px-4 mt-4">
             {/* Account page navigation */}
-            <nav className={`nav ${styles.nav} ${styles.navBorders}`}>
-                <a className={`nav-link active ms-0 ${styles.navLink}`} href="#profile">Profile</a>
+            <nav className="nav nav-borders">
+                <a className="nav-link active ms-0" href="#profile">Profile</a>
             </nav>
             <hr className="mt-0 mb-4" />
             <div className="row">
                 <div className="col-xl-4">
                     {/* Profile picture card */}
-                    <div className={`card mb-4 mb-xl-0 ${styles.card}`}>
-                        <div className={`card-body text-center ${styles.cardBody}`}>
+                    <div className="card mb-4 mb-xl-0">
+                        <div className="card-body text-center">
                             {/* Profile picture image */}
-                            <img className={`img-account-profile rounded-circle mb-2 ${styles.imgAccountProfile}`} src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                            <img className="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                            {/* Profile picture help block */}
                         </div>
                     </div>
                 </div>
                 <div className="col-xl-8">
                     {/* Account details card */}
-                    <div className={`card mb-4 ${styles.card}`}>
-                        <div className={`card-header ${styles.cardHeader}`}>Account Details</div>
-                        <div className={`card-body ${styles.cardBody}`}>
+                    <div className="card mb-4">
+                        <div className="card-header">Account Details</div>
+                        <div className="card-body">
                             <form>
-                                {/* Form Group (first name) */}
+                                Form Group (first name)
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputFirstName">First name</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputFirstName" type="text" placeholder="Enter your first name" value={profile.firstName} readOnly />
+                                    <label className="small mb-1" htmlFor="inputFirstName">First Name</label>
+                                    <input className="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value={profile.firstName} readOnly />
                                 </div>
                                 {/* Form Group (last name) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputLastName">Last name</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputLastName" type="text" placeholder="Enter your last name" value={profile.lastName} readOnly />
+                                    <label className="small mb-1" htmlFor="inputLastName">Last Name</label>
+                                    <input className="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value={profile.lastName} readOnly />
                                 </div>
-                                {/* Form Group (mobile) */}
+                                {/* Form Group (phone number) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputMobile">Mobile</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputMobile" type="tel" placeholder="Enter your mobile number" value={profile.mobile} readOnly />
+                                    <label className="small mb-1" htmlFor="inputPhone">Phone Number</label>
+                                    <input className="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value={profile.mobile} readOnly />
                                 </div>
                                 {/* Form Group (email address) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputEmailAddress">Email address</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputEmailAddress" type="email" placeholder="Enter your email address" value={profile.email} readOnly />
+                                    <label className="small mb-1" htmlFor="inputEmailAddress">Email Address</label>
+                                    <input className="form-control" id="inputEmailAddress" type="email" placeholder="Enter your email address" value={profile.email} readOnly />
                                 </div>
-                                {/* Form Group (city) */}
+                                {/* Form Group (organization name) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputCity">City</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputCity" type="text" placeholder="Enter your city" value={profile.city} readOnly />
+                                    <label className="small mb-1" htmlFor="inputCompanyName">Company Name</label>
+                                    <input className="form-control" id="inputCompanyName" type="text" placeholder="Enter your company name" value={profile.company} readOnly />
                                 </div>
-                                {/* Form Group (pincode) */}
+                                {/* Form Group (address) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputPincode">Pincode</label>
-                                    <input className={`form-control ${styles.formControl}`} id="inputPincode" type="text" placeholder="Enter your pincode" value={profile.pincode} readOnly />
+                                    <label className="small mb-1" htmlFor="inputAddress">Address</label>
+                                    <input className="form-control" id="inputAddress" type="text" placeholder="Enter your address" value={profile.address} readOnly />
                                 </div>
                                 {/* Save changes button */}
-                                <button className={`btn btn-primary ${styles.btnPrimary}`} type="button">Save changes</button>
+                                <button className="btn btn-primary" type="button">Save changes</button>
                             </form>
                         </div>
                     </div>

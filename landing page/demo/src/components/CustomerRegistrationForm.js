@@ -10,7 +10,6 @@ function CustomerRegistrationForm() {
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
   const [pincode, setPincode] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -29,7 +28,6 @@ function CustomerRegistrationForm() {
     }
     if (!city) errors.city = 'City is required';
     if (!pincode) errors.pincode = 'Pincode is required';
-    if (!username) errors.username = 'Username is required';
     if (!password) {
       errors.password = 'Password is required';
     } else if (password.length < 8) {
@@ -43,8 +41,6 @@ function CustomerRegistrationForm() {
     return errors;
   };
 
-  
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
@@ -52,8 +48,7 @@ function CustomerRegistrationForm() {
       setErrors(errors);
     } else {
       try {
-        // Handle form submission (e.g., send data to server)
-        const response = await axios.post('http://localhost:8080/csubmit', {
+        const response = await axios.post('http://localhost:8282/csubmit', {
           firstName,
           lastName,
           mobile,
@@ -62,24 +57,14 @@ function CustomerRegistrationForm() {
           pincode,
           password
         });
+        setSuccess('Registration Successful !!');
         
-        setSuccess('Registration Successful');
-
-        // Redirect or do something after successful submission
-         navigate('/loginform'); // Adjust the route as needed
+        navigate('/loginform'); // Redirect after successful submission
+        console.log(response.data); // Handle success response
       } catch (error) {
-        setErrors({ general: 'Registration Failed' });
+        console.error("There was an error submitting the form!", error);
+        // Handle error response
       }
-  
-      console.log({
-        firstName,
-        lastName,
-        mobile,
-        email,
-        city,
-        pincode,
-        password
-      });
     }
   };
   
@@ -183,19 +168,6 @@ function CustomerRegistrationForm() {
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
-                          type="text"
-                          id="username"
-                          className="form-control form-control-lg"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <label className="form-label" htmlFor="username">Username</label>
-                        {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
-                      </div>
-                    </div>
-                    <div className="col-md-6 mb-4">
-                      <div className="form-outline">
-                        <input
                           type="password"
                           id="password"
                           className="form-control form-control-lg"
@@ -206,9 +178,6 @@ function CustomerRegistrationForm() {
                         {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input

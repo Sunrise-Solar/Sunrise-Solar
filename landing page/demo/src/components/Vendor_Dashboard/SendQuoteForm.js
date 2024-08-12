@@ -1,160 +1,121 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import './SendQuoteForm.css';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const SendQuoteForm = ({ onSubmit }) => {
+const SendQuoteForm = () => {
+
+    const { requestId } = useParams(); // Get requestId from URL parameters
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        mobile: '',
-        company: '',
-        amount: '',
-        deliveryDate: '',
-        quotationPdf: null
+        price: 0,
+        deliveryDate: ''
     });
-
     const [errors, setErrors] = useState({});
+    const [success, setSuccess] = useState('');
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: files ? files[0] : value
+            [name]: value
         });
     };
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.name) newErrors.name = 'Name is required';
-        if (!formData.email) newErrors.email = 'Email is required';
-        else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
-        if (!formData.mobile) newErrors.mobile = 'Mobile is required';
-        else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile number must be 10 digits';
-        if (!formData.company) newErrors.company = 'Company is required';
-        if (!formData.amount) newErrors.amount = 'Amount is required';
-        else if (isNaN(formData.amount) || Number(formData.amount) <= 0) newErrors.amount = 'Amount must be a positive number';
+        if (!formData.price) newErrors.price = 'Price is required';
+        else if (isNaN(formData.price) || Number(formData.price) <= 0) newErrors.price = 'Price must be a positive number';
         if (!formData.deliveryDate) newErrors.deliveryDate = 'Delivery date is required';
-        if (!formData.quotationPdf) newErrors.quotationPdf = 'Quotation PDF is required';
-        else if (formData.quotationPdf.type !== 'application/pdf') newErrors.quotationPdf = 'Only PDF files are allowed';
-        else if (formData.quotationPdf.size > 5 * 1024 * 1024) newErrors.quotationPdf = 'File size must be less than 5MB';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
-            onSubmit(formData);
+            if (!requestId) {
+                console.error('No requestId provided');
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.post(`http://localhost:8282/vendor/submitquote/${Number(requestId)}`, {
+                    price: formData.price,
+                    deliverydate: formData.deliveryDate
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                // Handle success
+                setSuccess('Quote submitted successfully!');
+                console.log('Response:', response);
+            } catch (error) {
+                console.error('Error submitting quote:', error);
+                setErrors({ ...errors, server: 'Error submitting quote.' });
+            }
         }
     };
 
     return (
-        <div className="mt-4">
-            <h2>Send a Quote</h2>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        isInvalid={!!errors.name}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.name}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        isInvalid={!!errors.email}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.email}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formMobile">
-                    <Form.Label>Mobile</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="mobile"
-                        value={formData.mobile}
-                        onChange={handleChange}
-                        isInvalid={!!errors.mobile}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.mobile}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formCompany">
-                    <Form.Label>Company</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        isInvalid={!!errors.company}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.company}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formAmount">
-                    <Form.Label>Amount</Form.Label>
-                    <Form.Control
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        isInvalid={!!errors.amount}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.amount}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formDeliveryDate">
-                    <Form.Label>Delivery Date</Form.Label>
-                    <Form.Control
-                        type="date"
-                        name="deliveryDate"
-                        value={formData.deliveryDate}
-                        onChange={handleChange}
-                        isInvalid={!!errors.deliveryDate}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.deliveryDate}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formQuotationPdf">
-                    <Form.Label>Quotation PDF</Form.Label>
-                    <Form.Control
-                        type="file"
-                        name="quotationPdf"
-                        accept=".pdf"
-                        onChange={handleChange}
-                        isInvalid={!!errors.quotationPdf}
-                        required
-                    />
-                    <Form.Control.Feedback type="invalid">
-                        {errors.quotationPdf}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Send Quote
-                </Button>
-            </Form>
+        <div className="container-xl px-4 mt-4">
+            <div className="card border-primary">
+                <div className="card-header bg-primary text-white">
+                    <h3 className="mb-0">Send Quote</h3>
+                </div>
+                <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                        {success && <div className="alert alert-success">{success}</div>}
+                        {errors.server && <div className="alert alert-danger">{errors.server}</div>}
+                        
+                        <div className="mb-3">
+                            <label htmlFor="price" className="form-label">Price</label>
+                            <input 
+                                type="number" 
+                                id="price" 
+                                name="price" 
+                                className={`form-control ${errors.price ? 'is-invalid' : ''}`} 
+                                value={formData.price}
+                                onChange={handleChange} 
+                                required 
+                            />
+                            {errors.price && <div className="invalid-feedback">{errors.price}</div>}
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="deliveryDate" className="form-label">Delivery Date</label>
+                            <input 
+                                type="text" 
+                                //pattern="\d{2}-\d{2}-\d{4}"
+                                id="deliveryDate" 
+                                name="deliveryDate" 
+                                className={`form-control ${errors.deliveryDate ? 'is-invalid' : ''}`} 
+                                value={formData.deliveryDate}
+                                onChange={handleChange} 
+                                required 
+                            />
+                            {errors.deliveryDate && <div className="invalid-feedback">{errors.deliveryDate}</div>}
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <button 
+                                type="button" 
+                                className="btn btn-secondary" 
+                                onClick={() => window.history.back()} // Navigate back to the previous page
+                            >
+                                Back
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     );
 };

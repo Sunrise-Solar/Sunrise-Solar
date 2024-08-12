@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const columns = [
@@ -8,58 +9,59 @@ const columns = [
 
 const Quotations = () => {
     const navigate = useNavigate();
+    const [quotations, setQuotations] = useState([]);
     const [message, setMessage] = useState('');
 
-    const data = [
-        {
-            id: 1,
-            name: 'Alice Johnson',
-            email: 'alice.johnson@example.com',
-            mobile: '555-1234',
-            company: 'Tech Solutions',
-            amount: '$2000',
-            deliveryDate: '2024-09-15',
-            quotationPdf: 'https://example.com/path/to/quotation1.pdf', // Replace with a valid URL
-        },
-        {
-            id: 2,
-            name: 'Bob Brown',
-            email: 'bob.brown@example.com',
-            mobile: '555-5678',
-            company: 'Green Energy',
-            amount: '$1500',
-            deliveryDate: '2024-10-01',
-            quotationPdf: 'https://example.com/path/to/quotation2.pdf', // Replace with a valid URL
-        },
-    ];
+    useEffect(() => {
+        const fetchQuotations = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
+
+                const response = await axios.get('http://localhost:8282/customer/getquotes', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                setQuotations(response.data);
+            } catch (error) {
+                console.error('Error fetching quotations:', error);
+                setMessage('Error fetching quotations.');
+            }
+        };
+
+        fetchQuotations();
+    }, []);
 
     const handlePlaceOrder = (quotation) => {
         console.log('Place order for:', quotation);
         navigate('/place-order', { state: { quotation } });
     };
 
-    const handleDownloadQuote = (quotation) => {
-        console.log('Download quote:', quotation);
-        // Check if the URL is valid before attempting to download
-        fetch(quotation.quotationPdf, { method: 'HEAD' })
-            .then(response => {
-                if (response.ok) {
-                    const link = document.createElement('a');
-                    link.href = quotation.quotationPdf;
-                    link.download = `Quotation_${quotation.id}.pdf`; // Set the download file name
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    setMessage('File downloaded successfully.'); // Set success message
-                } else {
-                    setMessage(`File not present for quotation ID: ${quotation.id}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching the quotation PDF:', error);
-                setMessage('Error fetching the quotation PDF.');
-            });
-    };
+    // const handleDownloadQuote = (quotation) => {
+    //     console.log('Download quote:', quotation);
+    //     fetch(quotation.quotationPdf, { method: 'HEAD' })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 const link = document.createElement('a');
+    //                 link.href = quotation.quotationPdf;
+    //                 link.download = `Quotation_${quotation.id}.pdf`; // Set the download file name
+    //                 document.body.appendChild(link);
+    //                 link.click();
+    //                 document.body.removeChild(link);
+    //                 setMessage('File downloaded successfully.'); // Set success message
+    //             } else {
+    //                 setMessage(`File not present for quotation ID: ${quotation.id}`);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching the quotation PDF:', error);
+    //             setMessage('Error fetching the quotation PDF.');
+    //         });
+    // };
 
     return (
         <div className="container py-4">
@@ -79,13 +81,17 @@ const Quotations = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((row, rowIndex) => (
+                    {quotations.map((row, rowIndex) => (
                         <tr key={rowIndex}>
-                            {columns.slice(0, -1).map((column, colIndex) => (
-                                <td key={colIndex}>
-                                    {row[column.toLowerCase().replace(/\s/g, '')] || 'N/A'}
-                                </td>
-                            ))}
+                            <td>{row.name || 'N/A'}</td>
+                            <td>{row.email || 'N/A'}</td>
+                            <td>{row.mobile || 'N/A'}</td>
+                            <td>{row.company || 'N/A'}</td>
+                            <td>{row.amount || 'N/A'}</td>
+                            <td>{row.deliveryDate || 'N/A'}</td>
+                            <td>
+                                <a href={row.quotationPdf} target="_blank" rel="noopener noreferrer">View PDF</a>
+                            </td>
                             <td>
                                 <button 
                                     className="btn btn-primary me-2" 
@@ -93,12 +99,12 @@ const Quotations = () => {
                                 >
                                     Place Order
                                 </button>
-                                <button 
+                                {/* <button 
                                     className="btn btn-success" 
                                     onClick={() => handleDownloadQuote(row)}
                                 >
                                     Download Quote
-                                </button>
+                                </button> */}
                             </td>
                         </tr>
                     ))}

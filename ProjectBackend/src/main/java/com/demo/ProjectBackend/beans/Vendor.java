@@ -1,24 +1,17 @@
 package com.demo.ProjectBackend.beans;
 
 import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
 
 @Entity
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class Vendor {
 	
 	@Id
@@ -53,6 +46,77 @@ public class Vendor {
 		this.email = email;
 		this.company = company;
 		this.address = address;
+	}
+
+	public Vendor() {
+		super();
+	}
+
+	public int getVId() {
+		return VId;
+	}
+
+	public void setVId(int vId) {
+		VId = vId;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "Vendor [VId=" + VId + ", fName=" + fName + ", lName=" + lName + ", mobile=" + mobile + ", email="
+				+ email + ", company=" + company + ", address=" + address + "]";
+	}
+
+	public String getFName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
