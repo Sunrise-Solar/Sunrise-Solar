@@ -1,52 +1,57 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Orders = () => {
     const [orders, setOrders] = useState([]);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        // Hardcoded data for orders
-        const hardcodedOrders = [
-            {
-                oid: 'ORD001',
-                qid: 'QID001',
-                customerName: 'Alice Smith',
-                vendorName: 'John Doe',
-                company: 'Tech Corp',
-                siteAddress: '1234 Elm St, Springfield, USA',
-                amount: '$1500',
-                status: 'Pending' // New field added
-            },
-            {
-                oid: 'ORD002',
-                qid: 'QID002',
-                customerName: 'Bob Johnson',
-                vendorName: 'Jane Doe',
-                company: 'Innovate Ltd',
-                siteAddress: '5678 Oak St, Metropolis, USA',
-                amount: '$2000',
-                status: 'Completed' // New field added
-            },
-            {
-                oid: 'ORD003',
-                qid: 'QID003',
-                customerName: 'Charlie Brown',
-                vendorName: 'Alice Johnson',
-                company: 'Enterprise Inc',
-                siteAddress: '9101 Pine St, Gotham, USA',
-                amount: '$3000',
-                status: 'Pending' // New field added
-            }
-        ];
+        const fetchOrders = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
 
-        setOrders(hardcodedOrders);
+                const response = await axios.get('http://localhost:8282/customer/getorders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                setOrders(response.data);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                setMessage('Error fetching orders.');
+            }
+        };
+
+        fetchOrders();
     }, []);
 
-    const handleCompletePayment = (oid) => {
-        // Update order status to "Completed"
-        setOrders(orders.map(order =>
-            order.oid === oid ? { ...order, status: 'Completed' } : order
-        ));
+    const handleCompletePayment = async (oid) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found, please log in again.');
+            }
+
+            // Send request to update order status
+            await axios.post('http://localhost:8282/updateOrderStatus', 
+                { oId: oid, orderStatus: 'Completed', paymentStatus: 'Paid' }, 
+                { headers: { 'Authorization': `Bearer ${token}` } }
+            );
+
+            // Update order status locally
+            setOrders(orders.map(order =>
+                order.oId === oid ? { ...order, orderStatus: 'Completed', paymentStatus: 'Paid' } : order
+            ));
+            setMessage('Order status updated successfully.');
+        } catch (error) {
+            console.error('Error updating order status:', error);
+            setMessage('Error updating order status.');
+        }
     };
 
     return (
@@ -54,36 +59,44 @@ const Orders = () => {
             <div className="card mb-4">
                 <div className="card-body">
                     <h2>Orders</h2>
+                    {message && (
+                        <div className={`alert ${message.includes('successfully') ? 'alert-success' : 'alert-danger'} alert-dismissible`} role="alert">
+                            {message}
+                            <button type="button" className="btn-close" aria-label="Close" onClick={() => setMessage('')}></button>
+                        </div>
+                    )}
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Oid</th>
-                                <th>Qid</th>
-                                <th>C Name</th>
-                                <th>V Name</th>
+                                <th>Quotation ID</th>
+                                <th>Customer Name</th>
+                                <th>Vendor Name</th>
                                 <th>Company</th>
                                 <th>Site Address</th>
                                 <th>Amount</th>
-                                <th>Status</th> {/* New column */}
+                                <th>Order Status</th>
+                                <th>Payment Status</th>
+                                <th>Order Date</th>
                                 <th>Action</th> {/* New column for actions */}
                             </tr>
                         </thead>
                         <tbody>
                             {orders.map((order, index) => (
                                 <tr key={index}>
-                                    <td>{order.oid}</td>
-                                    <td>{order.qid}</td>
-                                    <td>{order.customerName}</td>
-                                    <td>{order.vendorName}</td>
-                                    <td>{order.company}</td>
-                                    <td>{order.siteAddress}</td>
-                                    <td>{order.amount}</td>
-                                    <td>{order.status}</td> {/* New status column */}
+                                    <td>{order.quotation.qId}</td> {/* Assuming Quotation has qId */}
+                                    <td>{order.customer.fName} {order.customer.lName}</td>
+                                    <td>{order.vendor.name}</td> {/* Assuming Vendor has a name field */}
+                                    <td>{order.quotation.company}</td>
+                                    <td>{order.quotation.siteAddress}</td>
+                                    <td>{order.quotation.amount}</td>
+                                    <td>{order.orderStatus}</td>
+                                    <td>{order.paymentStatus}</td>
+                                    <td>{order.orderDate}</td>
                                     <td>
-                                        {order.status === 'Pending' && (
+                                        {order.orderStatus === 'Pending' && (
                                             <button
                                                 className="btn btn-primary"
-                                                onClick={() => handleCompletePayment(order.oid)}
+                                                onClick={() => handleCompletePayment(order.oId)}
                                             >
                                                 Complete Payment
                                             </button>

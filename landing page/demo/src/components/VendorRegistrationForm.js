@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './registrationForm.css'; // Custom CSS file if needed
-import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function VendorRegistrationForm() {
   const [fName, setFName] = useState('');
@@ -15,6 +15,7 @@ function VendorRegistrationForm() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const errors = {};
@@ -52,8 +53,7 @@ function VendorRegistrationForm() {
         });
         
         setSuccess('Registration Successful');
-        Navigate('/loginform'); 
-
+        navigate('/loginform'); 
         console.log('Vendor registered:', response.data);
       } catch (error) {
         console.error('There was an error registering the vendor!', error);

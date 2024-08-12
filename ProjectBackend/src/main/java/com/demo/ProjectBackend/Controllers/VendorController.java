@@ -1,6 +1,7 @@
 package com.demo.ProjectBackend.Controllers;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,10 @@ public class VendorController {
 	@PostMapping("/submitquote/{rid}")
 	public String submitQuote(@RequestBody Quotation quotation, @PathVariable("rid") int id) {
 		
+		System.out.println(quotation);
+		
+		System.out.println(id);
+		
 		User user = uservice.getLoggedInUser();
 		Vendor vendor = user.getVendor();
 		System.out.println("vendor: "+vendor);
@@ -54,7 +59,7 @@ public class VendorController {
 		quotation.setCustomer(customer);
 		quotation.setVendor(vendor);
 		quotation.setRequest(request);
-		System.out.println("quotation: "+quotation.getQId()+quotation.getPrice());
+		System.out.println("quotation: "+quotation.getqId()+quotation.getPrice());
 		System.out.println("request: "+request);
 		vservice.addQuote(quotation);
 		return "vdashboard";
@@ -85,6 +90,36 @@ public class VendorController {
 		ResponseDTO rdto = new ResponseDTO(rlist, qlist, olist);
 		return new ResponseEntity<>(rdto,HttpStatus.OK);
 		
+	}
+	@GetMapping("/getVendor")
+	public ResponseEntity<Vendor> getVendor(){
+		User user = uservice.getLoggedInUser();
+	    Vendor vendor = user.getVendor();
+		return new ResponseEntity<>(vendor,HttpStatus.OK);
+		}
+	
+	@GetMapping("/getrequests")
+	public ResponseEntity<List<Request>> getRequest(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Request> rlist = vservice.getAll();
+		return new ResponseEntity<>(rlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getquotes")
+	public ResponseEntity<List<Quotation>> getQuotes(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Quotation> qlist = vservice.getQuotationByVendorId(vendor.getVId());
+		return new ResponseEntity<>(qlist,HttpStatus.OK);
+	}
+	
+	@GetMapping("/getorders")
+	public ResponseEntity<List<Orders>> getOrders(){
+		User user = uservice.getLoggedInUser();
+		Vendor vendor = user.getVendor();
+		List<Orders> olist = vservice.getOrderByVendorId(vendor.getVId());
+		return new ResponseEntity<>(olist,HttpStatus.OK);
 	}
 
 }

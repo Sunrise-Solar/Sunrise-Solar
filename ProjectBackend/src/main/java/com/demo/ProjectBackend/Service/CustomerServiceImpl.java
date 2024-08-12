@@ -45,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerDto convertToDto(Customer cust) {
-		CustomerDto cdto = new CustomerDto(cust.getFName(),cust.getLName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
+		CustomerDto cdto = new CustomerDto(cust.getfName(),cust.getlName(),cust.getMobile(),cust.getEmail(),cust.getCity(),cust.getPincode());
 		return cdto;
 	}
 

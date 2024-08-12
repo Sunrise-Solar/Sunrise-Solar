@@ -45,6 +45,8 @@ function Loginform({ setUserType }) {
           },
         });
         
+        
+        console.log('data fetched');
         // Extract the token and role from the response
         const { token, role } = response.data;
 
@@ -52,17 +54,19 @@ function Loginform({ setUserType }) {
           throw new Error('Login failed: Token or role missing in response');
         }
 
+        console.log('data fetched');
         // Save the token to localStorage or sessionStorage
         localStorage.setItem('token', token);
 
-        // Set the user type and navigate to the appropriate dashboard
+        console.log('data fetched');
+        console.log({role});
         setUserType(role);
         if (role === 'vendor') {
-          navigate('/VendorApp');
+          navigate('/vendor-dashboard');
         } else if (role === 'customer') {
-          navigate('/CustomerApp');
+          navigate('/customer-dashboard');
         } else {
-          navigate('/'); // Default fallback if role is unrecognized
+          navigate('/'); 
         }
 
       } catch (error) {

@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const RequestForm = () => {
     const [formData, setFormData] = useState({
-        
-        name: '',
-        email: '',
-        mobile: '',
         propertyType: '',
         address: '',
         electricityBill: '',
         electricityConsumption: ''
     });
-
     const [errors, setErrors] = useState({});
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,9 +25,6 @@ const RequestForm = () => {
     const validate = () => {
         const newErrors = {};
         
-        if (!formData.name) newErrors.name = 'Name is required';
-        if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Valid email is required';
-        if (!formData.mobile || !/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile number must be 10 digits';
         if (!formData.propertyType) newErrors.propertyType = 'Property type is required';
         if (!formData.address) newErrors.address = 'Address is required';
         if (!formData.electricityBill || isNaN(formData.electricityBill)) newErrors.electricityBill = 'Valid electricity bill amount is required';
@@ -38,13 +34,34 @@ const RequestForm = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (validate()) {
-            console.log('Form submitted:', formData);
-            // Handle form submission logic here
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        
+        const errors = validate(); // Ensure this function is defined correctly
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+        } else {
+            try {
+                const response = await axios.post('http://localhost:8282/customer/submitrequest', {
+                    propertyType: formData.propertyType,
+                    address: formData.address,
+                    electricityBill: parseFloat(formData.electricityBill), // Ensure this is a number
+                    electricityConsumption: parseFloat(formData.electricityConsumption) // Ensure this is a number
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+    
+                setSuccess('Request added successfully!');
+                navigate('/customer-dashboard/requests'); // Redirect after successful submission
+            } catch (error) {
+                console.error("There was an error submitting the form!", error);
+                // Handle error response
+            }
         }
     };
+    
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -54,46 +71,9 @@ const RequestForm = () => {
                 </div>
                 <div className="card-body">
                     <form onSubmit={handleSubmit}>
+                        {success && <div className="alert alert-success">{success}</div>}
+                        {errors.server && <div className="alert alert-danger">{errors.server}</div>}
                         
-                        <div className="mb-3">
-                            <label htmlFor="name" className="form-label">Name</label>
-                            <input 
-                                type="text" 
-                                id="name" 
-                                name="name" 
-                                className={`form-control ${errors.name ? 'is-invalid' : ''}`} 
-                                value={formData.name}
-                                onChange={handleChange} 
-                                required 
-                            />
-                            {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label">Email</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
-                                className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                                value={formData.email}
-                                onChange={handleChange} 
-                                required 
-                            />
-                            {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="mobile" className="form-label">Mobile</label>
-                            <input 
-                                type="text" 
-                                id="mobile" 
-                                name="mobile" 
-                                className={`form-control ${errors.mobile ? 'is-invalid' : ''}`} 
-                                value={formData.mobile}
-                                onChange={handleChange} 
-                                required 
-                            />
-                            {errors.mobile && <div className="invalid-feedback">{errors.mobile}</div>}
-                        </div>
                         <div className="mb-3">
                             <label htmlFor="propertyType" className="form-label">Property Type</label>
                             <input 

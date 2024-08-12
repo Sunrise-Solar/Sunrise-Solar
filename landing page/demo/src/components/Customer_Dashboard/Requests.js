@@ -1,31 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const initialRequests = [
-    {
-        name: 'Alice Johnson',
-        email: 'alice.johnson@example.com',
-        mobile: '1234567890',
-        propertyType: 'Residential',
-        address: '123 Elm Street, Springfield',
-        electricityBill: '$100',
-        electricityConsumption: '500 kWh'
-    },
-    {
-        name: 'Bob Smith',
-        email: 'bob.smith@example.com',
-        mobile: '0987654321',
-        propertyType: 'Commercial',
-        address: '456 Oak Avenue, Metropolis',
-        electricityBill: '$200',
-        electricityConsumption: '1500 kWh'
-    },
-    // Add more hardcoded data as needed
-];
-
 const Requests = () => {
-    const [requests, setRequests] = useState(initialRequests);
+    const [requests, setRequests] = useState([]);
+
+    useEffect(() => {
+        const fetchRequests = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
+
+                const response = await axios.get('http://localhost:8282/customer/getrequests', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+
+                console.log('Fetched requests:', response.data);
+                setRequests(response.data);
+            } catch (error) {
+                console.error('Error fetching requests:', error);
+            }
+        };
+
+        fetchRequests();
+    }, []); // Empty dependency array ensures this runs once on component mount
 
     const handleDelete = (index) => {
         const updatedRequests = requests.filter((_, i) => i !== index);
@@ -47,32 +50,37 @@ const Requests = () => {
                                 <th>Address</th>
                                 <th>Electricity Bill</th>
                                 <th>Electricity Consumption</th>
-                                <th>Actions</th> {/* Add Actions column */}
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.map((request, index) => (
-                                <tr key={index}>
-                                    <td>{request.name}</td>
-                                    <td>{request.email}</td>
-                                    <td>{request.mobile}</td>
-                                    <td>{request.propertyType}</td>
-                                    <td>{request.address}</td>
-                                    <td>{request.electricityBill}</td>
-                                    <td>{request.electricityConsumption}</td>
-                                    <td>
-                                        <button 
-                                            className="btn btn-danger" 
-                                            onClick={() => handleDelete(index)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
+                            {requests.length > 0 ? (
+                                requests.map((request, index) => (
+                                    <tr key={index}>
+                                        <td>{request.customer.firstName} {request.customer.lastName}</td>
+                                        <td>{request.customer.email}</td>
+                                        <td>{request.customer.mobile}</td>
+                                        <td>{request.propertyType}</td>
+                                        <td>{request.address}</td>
+                                        <td>{request.electricityBill}</td>
+                                        <td>{request.electricityConsumption}</td>
+                                        <td>
+                                            <button 
+                                                className="btn btn-danger" 
+                                                onClick={() => handleDelete(index)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="8" className="text-center">No requests found</td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
-                    {/* Button below the table */}
                     <div className="text-end">
                         <Link to="/send-request" className="btn btn-primary">
                             Add Request

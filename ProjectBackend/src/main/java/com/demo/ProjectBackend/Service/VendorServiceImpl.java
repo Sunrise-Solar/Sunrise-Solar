@@ -46,7 +46,7 @@ public class VendorServiceImpl implements VendorService{
 	}
 	@Override
 	public VendorDto convertToDto(Vendor vendor) {
-		VendorDto vdto = new VendorDto(vendor.getFName(),vendor.getLName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
+		VendorDto vdto = new VendorDto(vendor.getfName(),vendor.getlName(),vendor.getMobile(),vendor.getEmail(),vendor.getCompany(),vendor.getAddress());
 		return vdto;
 	}
 	@Override
