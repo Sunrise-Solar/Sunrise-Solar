@@ -12,15 +12,13 @@ function Registration() {
         <button
           className="btn btn-primary btn-sm"
           type="button"
-          onClick={() => navigate('/custRegistration')}
-        >
+          onClick={() => navigate('/custRegistration')}>
           Customer Registration
         </button>
         <button
           className="btn btn-secondary btn-sm"
           type="button"
-          onClick={() => navigate('/VendorRegistration')}
-        >
+          onClick={() => navigate('/VendorRegistration')}>
           Vendor Registration
         </button>
       </div>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import About from './About';
 import Contact from './Contact';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 function Home() {
   const navigate = useNavigate();
@@ -56,12 +57,13 @@ function Home() {
                 </a>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={handleAboutClick}>
+                <button className="nav-link btn btn-link" onClick={handleAboutClick}  style={{ fontSize: "bold", fontWeight: " 900" }}>
+               
                   About
                 </button>
               </li>
               <li className="nav-item">
-                <button className="nav-link btn btn-link" onClick={handleContactClick}>
+                <button className="nav-link btn btn-link" onClick={handleContactClick}  style={{ fontSize: "bold", fontWeight: " 900" }}>
                   Contact
                 </button>
               </li>
@@ -78,8 +80,7 @@ function Home() {
               <button
                 className="btn btn-info"
                 type="button"
-                onClick={() => navigate("/registration")}
-              >
+                onClick={() => navigate("/registration")} style={{backgroundColor:'#198751', color:'white', cursor:'pointer', border:'none'}}>
                 Registration
               </button>
             </form>
@@ -166,12 +167,10 @@ function Home() {
       {/* How It Works */}
       <div
         className="row mt-3"
-        style={{ backgroundColor: "midnightblue", padding: "2% 0% 8% 0%" }}
-      >
+        style={{ backgroundColor: "midnightblue", padding: "2% 0% 8% 0%" }}>
         <div
           className="benifits"
-          style={{ marginBottom: "5rem", backgroundColor: "white" }}
-        >
+          style={{ marginBottom: "5rem", backgroundColor: "white" }}>
           <h1 style={{ textAlign: "center", color: "black" }}>
             Get Rooftop Solar.
           </h1>
@@ -193,8 +192,7 @@ function Home() {
             <img
               src="/card1.png"
               className="card-img-top"
-              alt="Register to get quotes"
-            />
+              alt="Register to get quotes"/>
             <div className="card-body">
               <h5 className="card-title">Register to get quotes</h5>
               <p className="card-text">
