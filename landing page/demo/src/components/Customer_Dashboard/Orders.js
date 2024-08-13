@@ -38,15 +38,19 @@ const Orders = () => {
             }
 
             // Send request to update order status
-            await axios.post('http://localhost:8282/updateOrderStatus', 
-                { oId: oid, orderStatus: 'Completed', paymentStatus: 'Paid' }, 
-                { headers: { 'Authorization': `Bearer ${token}` } }
-            );
+            await axios.get(`http://localhost:8282/customer/completepayment/${Number(oid)}`, 
+            
+             {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
 
             // Update order status locally
-            setOrders(orders.map(order =>
-                order.oId === oid ? { ...order, orderStatus: 'Completed', paymentStatus: 'Paid' } : order
-            ));
+            // setOrders(orders.map(order =>
+            //     order.oId === oid ? { ...order, orderStatus: 'Completed', paymentStatus: 'Paid' } : order
+            // ));
             setMessage('Order status updated successfully.');
         } catch (error) {
             console.error('Error updating order status:', error);
@@ -81,30 +85,31 @@ const Orders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order, index) => (
-                                <tr key={index}>
-                                    <td>{order.quotation.qId}</td> {/* Assuming Quotation has qId */}
-                                    <td>{order.customer.fName} {order.customer.lName}</td>
-                                    <td>{order.vendor.name}</td> {/* Assuming Vendor has a name field */}
-                                    <td>{order.quotation.company}</td>
-                                    <td>{order.quotation.siteAddress}</td>
-                                    <td>{order.quotation.amount}</td>
-                                    <td>{order.orderStatus}</td>
-                                    <td>{order.paymentStatus}</td>
-                                    <td>{order.orderDate}</td>
-                                    <td>
-                                        {order.orderStatus === 'Pending' && (
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => handleCompletePayment(order.oId)}
-                                            >
-                                                Complete Payment
-                                            </button>
-                                        )}
-                                    </td>
-                                </tr>
+                          {orders.map((order) => (
+                            <tr key={order.oId}>
+                                <td>{order.quotation.qId}</td><td>{order.customer.firstName} {order.customer.lastName}</td>
+                                <td>{order.vendor.fName} {order.vendor.lName}</td>
+                                <td>{order.quotation.vendor.company}</td>
+                                <td>{order.quotation.vendor.address}</td>
+                                <td>{order.quotation.price}</td>
+                                <td>{order.orderStatus}</td>
+                                <td>{order.paymentStatus}</td>
+                                <td>{order.orderDate}</td>
+                                <td>
+    {(order.paymentStatus === 'Pending' || (order.paymentStatus === 'Requested')) && (
+        <button
+            className="btn btn-primary"
+            onClick={() => handleCompletePayment(order.oId)}
+        >
+            Complete Payment
+        </button>
+    )}
+</td>
+
+                             </tr>
                             ))}
                         </tbody>
+
                     </table>
                 </div>
             </div>

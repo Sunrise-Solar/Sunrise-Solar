@@ -66,15 +66,15 @@ const Profile = () => {
                                 {/* Form Row */}
                                 <div className="row gx-3 mb-3">
                                     {/* Form Group (first name) */}
-                                    {/* <div className="col-md-6">
+                                    <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputFirstName">First name</label>
-                                        <input className="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value={profile.firstName} readOnly />
-                                    </div> */}
+                                        <input className="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value={profile.fName} readOnly />
+                                    </div>
                                     {/* Form Group (last name) */}
-                                    {/* <div className="col-md-6">
+                                    <div className="col-md-6">
                                         <label className="small mb-1" htmlFor="inputLastName">Last name</label>
-                                        <input className="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value={profile.lastName} readOnly />
-                                    </div> */}
+                                        <input className="form-control" id="inputLastName" type="text" placeholder="Enter your last name" value={profile.lName} readOnly />
+                                    </div>
                                 </div>
                                 {/* Form Row */}
                                 <div className="row gx-3 mb-3">

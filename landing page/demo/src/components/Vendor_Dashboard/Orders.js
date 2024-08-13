@@ -6,7 +6,8 @@ const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-
+    const [message, setMessage] = useState('');
+    
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -32,15 +33,32 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
-    const handleRequestPayment = (orderId) => {
-        // Update order status to "Completed"
-        setOrders(orders.map(order =>
-            order.orderId === orderId ? { ...order, status: 'Completed' } : order
-        ));
+    const handleRequestPayment = async(orderId) => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('No token found, please log in again.');
+                }
+    
+                // Send request to update order status
+                await axios.get(`http://localhost:8282/vendor/finishorder/${Number(orderId)}`, 
+                
+                 {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                setMessage('Order status updated successfully.');
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                setMessage('Error updating order status.');
+            }
+        
     };
 
     const columns = [
-        'Oid', 'Qid', 'C name', 'V name', 'Company', 'Site Address', 'Amount', 'Status', 'Action'
+        'OrderId', 'QuotationId', 'Customer Name', 'Vendor Name', 'Company', 'Site Address', 'Amount', 'OrderStatus', 'Payment Status','OrderDate','Action'
     ];
 
     if (loading) {
@@ -64,20 +82,22 @@ const Orders = () => {
                 </thead>
                 <tbody>
                     {orders.map((order) => (
-                        <tr key={order.orderId}>
-                            <td>{order.Oid}</td>
-                            <td>{order.Qid}</td>
-                            <td>{order.Cname}</td>
-                            <td>{order.Vname}</td>
-                            <td>{order.Company}</td>
-                            <td>{order.SiteAddress}</td>
-                            <td>{order.Amount}</td>
-                            <td>{order.Status}</td>
+                        <tr key={order.oId}>
+                            <td>{order.oId}</td>
+                           <td>{order.quotation.qId}</td>
+                           <td>{order.customer.firstName} {order.customer.lastName}</td>
+                                <td>{order.vendor.fName} {order.vendor.lName}</td>
+                                <td>{order.quotation.vendor.company}</td>
+                                <td>{order.quotation.vendor.address}</td>
+                                <td>{order.quotation.price}</td>
+                                <td>{order.orderStatus}</td>
+                                <td>{order.paymentStatus}</td>
+                                <td>{order.orderDate}</td>
                             <td>
-                                {order.Status === 'Pending' && (
+                                {order.paymentStatus === 'Pending' && (
                                     <button
                                         className="btn btn-primary"
-                                        onClick={() => handleRequestPayment(order.orderId)}
+                                        onClick={() => handleRequestPayment(order.oId)}
                                     >
                                         Request Payment
                                     </button>

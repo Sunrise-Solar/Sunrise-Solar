@@ -72,7 +72,7 @@ const Profile = () => {
                         <div className="card-header">Account Details</div>
                         <div className="card-body">
                             <form>
-                                Form Group (first name)
+                                {/* Form Group (first name) */}
                                 <div className="mb-3">
                                     <label className="small mb-1" htmlFor="inputFirstName">First Name</label>
                                     <input className="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" value={profile.firstName} readOnly />
@@ -94,16 +94,16 @@ const Profile = () => {
                                 </div>
                                 {/* Form Group (organization name) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputCompanyName">Company Name</label>
-                                    <input className="form-control" id="inputCompanyName" type="text" placeholder="Enter your company name" value={profile.company} readOnly />
+                                    <label className="small mb-1" htmlFor="inputCompanyName">City</label>
+                                    <input className="form-control" id="inputCompanyName" type="text" placeholder="Enter your company name" value={profile.city} readOnly />
                                 </div>
                                 {/* Form Group (address) */}
                                 <div className="mb-3">
-                                    <label className="small mb-1" htmlFor="inputAddress">Address</label>
-                                    <input className="form-control" id="inputAddress" type="text" placeholder="Enter your address" value={profile.address} readOnly />
+                                    <label className="small mb-1" htmlFor="inputAddress">Pincode</label>
+                                    <input className="form-control" id="inputAddress" type="text" placeholder="Enter your address" value={profile.pincode} readOnly />
                                 </div>
                                 {/* Save changes button */}
-                                <button className="btn btn-primary" type="button">Save changes</button>
+                               
                             </form>
                         </div>
                     </div>

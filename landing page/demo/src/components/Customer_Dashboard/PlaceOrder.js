@@ -1,18 +1,49 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios'; // Add axios for API calls
+
+
 
 const PlaceOrder = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { quotation } = location.state || {};
+    const { quotationID } =useParams();
+    const QuotationID = Number(quotationID);
+    console.log('Quotation ID from params:', QuotationID);
+    const { quotation } = location.state || {}; // Extract quotation from location.state
+    console.log('Received quotation:', quotation);
+    const [isConfirming, setIsConfirming] = useState(true);
 
-    const [isConfirming, setIsConfirming] = useState(true); // State to toggle between form and confirmation
+    
+    const handleConfirm = async () => {
+        try {
+            console.log('Quotation ID from params:', QuotationID);
+            console.log(quotation?.qId);
+            // Ensure that quotation id is available and valid
+            if (!quotation?.qId) {
+                console.error('Invalid quotation ID');
+                return;
+            }
 
-    const handleConfirm = () => {
-        // Handle order placement logic here
-        console.log('Order placed:', quotation);
-        setIsConfirming(false);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
+
+            const response = await axios.get(`http://localhost:8282/customer/placeorder/${Number(quotation.qId)}`,  {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log('Order placed:', response.data);
+            setIsConfirming(false); // Update state to show success message
+        } catch (error) {
+            console.error('Error placing order:', error);
+            // Handle error appropriately
+        }
     };
 
     const handleCancel = () => {
@@ -29,14 +60,14 @@ const PlaceOrder = () => {
                     {isConfirming ? (
                         <div>
                             <p className="lead">Are you sure you want to place the order with the following details?</p>
-                            <ul>
-                                <li><strong>Quotation ID:</strong> {quotation?.id}</li>
-                                <li><strong>Customer Name:</strong> {quotation?.customerName}</li>
-                                <li><strong>Vendor Name:</strong> {quotation?.vendorName}</li>
-                                <li><strong>Company:</strong> {quotation?.company}</li>
-                                <li><strong>Site Address:</strong> {quotation?.siteAddress}</li>
-                                <li><strong>Amount:</strong> {quotation?.amount}</li>
-                            </ul>
+                            {/* <ul>
+                                <li><strong>Quotation ID:</strong> {quotation?.qId}</li>
+                                <li><strong>Customer Name:</strong> {quotation?.customer.firstName}</li>
+                                <li><strong>Vendor Name:</strong> {quotation?.vendor.fName}</li>
+                                <li><strong>Company:</strong> {quotation?.vendor.company}</li>
+                                <li><strong>Site Address:</strong> {quotation?.vendor.address}</li>
+                                <li><strong>Amount:</strong> {quotation?.price}</li>
+                            </ul> */}
                             <div className="d-flex justify-content-between mt-3">
                                 <button
                                     type="button"

@@ -4,7 +4,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const columns = [
-    'Name', 'Email', 'Mobile', 'Company', 'Amount', 'Delivery Date', 'Quotation PDF', 'Actions'
+    'Name', 'Email', 'Mobile', 'Company', 'Amount', 'Delivery Date',  'Actions'
 ];
 
 const Quotations = () => {
@@ -37,31 +37,19 @@ const Quotations = () => {
     }, []);
 
     const handlePlaceOrder = (quotation) => {
-        console.log('Place order for:', quotation);
-        navigate('/place-order', { state: { quotation } });
+        if (!quotation || !quotation.qId) {
+            console.error('Invalid quotation object:', quotation);
+            return;
+        }
+        console.log('Navigating to place order with quotationID:', quotation.qId);
+        console.log('Navigating to place order with quotation:', quotation);
+        navigate(`/place-order/${Number(quotation.qId)}`, { state: { quotation } });
     };
+    
+    
+    
 
-    // const handleDownloadQuote = (quotation) => {
-    //     console.log('Download quote:', quotation);
-    //     fetch(quotation.quotationPdf, { method: 'HEAD' })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 const link = document.createElement('a');
-    //                 link.href = quotation.quotationPdf;
-    //                 link.download = `Quotation_${quotation.id}.pdf`; // Set the download file name
-    //                 document.body.appendChild(link);
-    //                 link.click();
-    //                 document.body.removeChild(link);
-    //                 setMessage('File downloaded successfully.'); // Set success message
-    //             } else {
-    //                 setMessage(`File not present for quotation ID: ${quotation.id}`);
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching the quotation PDF:', error);
-    //             setMessage('Error fetching the quotation PDF.');
-    //         });
-    // };
+    
 
     return (
         <div className="container py-4">
@@ -81,21 +69,18 @@ const Quotations = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {quotations.map((row, rowIndex) => (
-                        <tr key={rowIndex}>
-                            <td>{row.name || 'N/A'}</td>
-                            <td>{row.email || 'N/A'}</td>
-                            <td>{row.mobile || 'N/A'}</td>
-                            <td>{row.company || 'N/A'}</td>
-                            <td>{row.amount || 'N/A'}</td>
-                            <td>{row.deliveryDate || 'N/A'}</td>
-                            <td>
-                                <a href={row.quotationPdf} target="_blank" rel="noopener noreferrer">View PDF</a>
-                            </td>
+                    {quotations.map((quotation) => (
+                        <tr key={quotation.qId}>
+                            <td>{quotation.vendor.fName || 'N/A'}</td>
+                            <td>{quotation.vendor.email || 'N/A'}</td>
+                            <td>{quotation.vendor.mobile || 'N/A'}</td>
+                            <td>{quotation.vendor.company || 'N/A'}</td>
+                            <td>{quotation.price || 'N/A'}</td>
+                            <td>{quotation.deliverydate || 'N/A'}</td>
                             <td>
                                 <button 
                                     className="btn btn-primary me-2" 
-                                    onClick={() => handlePlaceOrder(row)}
+                                    onClick={() => handlePlaceOrder(quotation)}
                                 >
                                     Place Order
                                 </button>

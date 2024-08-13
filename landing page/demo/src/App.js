@@ -31,7 +31,7 @@ const App = () => {
         <Route path="/vendorRegistration" element={<VendorRegistrationForm />} />
         <Route path="/loginform" element={<Loginform setUserType={setUserType} />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path="/place-order" element={<PlaceOrder />} />
+        <Route path="/place-order/:quotationId" element={<PlaceOrder />} />
         <Route path="/send-request" element={<RequestForm />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />

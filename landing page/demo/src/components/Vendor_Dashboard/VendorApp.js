@@ -216,7 +216,7 @@ const VendorApp = () => {
                         <Route path="requests" element={<Requests />} />
                         <Route path="quotations" element={<Quotations quotations={quotations} />} />
                         <Route path="orders" element={<Orders orders={orders} />} />
-                        <Route path="send-quote-form/:requestId" element={<SendQuoteForm />} />
+                        <Route path="send-quote-form/requestId" element={<SendQuoteForm />} />
                     </Routes>
                 </div>
             </Container>

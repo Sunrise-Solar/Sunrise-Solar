@@ -126,7 +126,7 @@ const Requests = () => {
 
     const handleSendQuote = (requestId) => {
         console.log({requestId});
-        navigate(`/send-quote-form/:${requestId}`); // Navigate to SendQuoteForm with requestId
+        navigate(`/send-quote-form/${requestId}`); // Navigate to SendQuoteForm with requestId
     };
 
     if (loading) {

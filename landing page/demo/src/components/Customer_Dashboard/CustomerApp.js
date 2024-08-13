@@ -57,7 +57,7 @@ const CustomerApp = () => {
             <Route path="/requests" element={<Requests requests={requests} />} />
             <Route path="/quotations" element={<Quotations quotations={quotations} />} />
             <Route path="/orders" element={<Orders orders={orders} />} />
-            <Route path="/place-order" element={<PlaceOrder />} />
+            <Route path="/place-order/:quotationId" element={<PlaceOrder />} />
             <Route path="/send-request" element={<RequestForm />} />
           </Routes>
         </div>

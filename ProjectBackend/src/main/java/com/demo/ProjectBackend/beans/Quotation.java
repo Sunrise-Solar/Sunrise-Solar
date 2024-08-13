@@ -24,7 +24,7 @@ public class Quotation {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int qId;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="r_id")
 	private Request request;
 	
@@ -39,9 +39,12 @@ public class Quotation {
 	//@NotBlank(message="Required field!")
 	private double price;
 	
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@OneToOne(mappedBy = "quotation", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Orders order;
+	
+	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 	//@NotBlank(message="Required field!")
-	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate deliverydate;
 	
 	
@@ -50,7 +53,8 @@ public class Quotation {
 	}
 
 
-	public Quotation(int qId, Request request, Customer customer, Vendor vendor,double price,LocalDate deliverydate) {
+	public Quotation(int qId, Request request, Customer customer, Vendor vendor,double price,
+		 LocalDate deliverydate) {
 		super();
 		this.qId = qId;
 		this.request = request;

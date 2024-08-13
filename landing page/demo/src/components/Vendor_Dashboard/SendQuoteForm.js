@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const SendQuoteForm = () => {
-
+    const navigate = useNavigate();
     const { requestId } = useParams(); // Get requestId from URL parameters
     const [formData, setFormData] = useState({
-        price: 0,
+        price: '',
         deliveryDate: ''
     });
     const [errors, setErrors] = useState({});
@@ -52,6 +52,7 @@ const SendQuoteForm = () => {
                 
                 // Handle success
                 setSuccess('Quote submitted successfully!');
+                navigate(-1);
                 console.log('Response:', response);
             } catch (error) {
                 console.error('Error submitting quote:', error);
@@ -59,6 +60,13 @@ const SendQuoteForm = () => {
             }
         }
     };
+    // const formatDate = (date) => {
+    //     const d = new Date(date);
+    //     const day = String(d.getDate()).padStart(2, '0');
+    //     const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    //     const year = d.getFullYear();
+    //     return `${day}-${month}-${year}`;
+    // };
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -87,8 +95,7 @@ const SendQuoteForm = () => {
                         <div className="mb-3">
                             <label htmlFor="deliveryDate" className="form-label">Delivery Date</label>
                             <input 
-                                type="text" 
-                                //pattern="\d{2}-\d{2}-\d{4}"
+                                type="date" 
                                 id="deliveryDate" 
                                 name="deliveryDate" 
                                 className={`form-control ${errors.deliveryDate ? 'is-invalid' : ''}`} 

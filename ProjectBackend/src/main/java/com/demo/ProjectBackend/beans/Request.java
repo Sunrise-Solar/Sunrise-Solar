@@ -1,13 +1,19 @@
 package com.demo.ProjectBackend.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -22,9 +28,12 @@ public class Request {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int rId;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="c_id")
 	private Customer customer;
+	
+	@OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Quotation> quotations = new ArrayList<>();
 	
 	//@NotBlank(message="Required field!")
 	private String propertyType;

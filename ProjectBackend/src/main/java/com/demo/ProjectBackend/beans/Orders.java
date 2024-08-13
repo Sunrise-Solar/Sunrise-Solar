@@ -27,14 +27,14 @@ public class Orders {
 	private String  orderStatus;
 	
 	private String paymentStatus;
-	@OneToOne
+	@OneToOne()
 	private Quotation quotation;
 	
 	private String orderDate;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="c_id")
 	private Customer customer;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="v_id")
 	private Vendor vendor;
 	

@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Requests = () => {
     const [requests, setRequests] = useState([]);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -30,10 +31,41 @@ const Requests = () => {
         fetchRequests();
     }, []); // Empty dependency array ensures this runs once on component mount
 
-    const handleDelete = (index) => {
-        const updatedRequests = requests.filter((_, i) => i !== index);
-        setRequests(updatedRequests);
+    const handleDelete = async (RequestId) => {
+        try {
+            console.log('Quotation ID to delete:', RequestId);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found, please log in again.');
+            }
+    
+            if (!RequestId || isNaN(RequestId)) {
+                console.error('Invalid RequestId:', RequestId);
+                setMessage('Invalid quotation ID.');
+                return;
+            }
+    
+            // Confirm before deletion
+            const isConfirmed = window.confirm('Are you sure you want to delete this request?');
+            if (!isConfirmed) {
+                return; // Exit if the user cancels the deletion
+            }
+    
+            await axios.delete(`http://localhost:8282/customer/deleterequest/${Number(RequestId)}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            // Update state by filtering out the deleted quotation
+            setRequests((prevRequest) => prevRequest.filter((r) => r.rId !== RequestId));
+            setMessage('Request deleted successfully.'); // Optionally, add a success message
+        } catch (error) {
+            console.error('Error deleting Request:', error);
+            setMessage('Error deleting Request.');
+        }
     };
+    
 
     return (
         <div className="container-xl px-4 mt-4">
@@ -56,7 +88,7 @@ const Requests = () => {
                         <tbody>
                             {requests.length > 0 ? (
                                 requests.map((request, index) => (
-                                    <tr key={index}>
+                                    <tr key={request.rId}>
                                         <td>{request.customer.firstName} {request.customer.lastName}</td>
                                         <td>{request.customer.email}</td>
                                         <td>{request.customer.mobile}</td>
@@ -67,7 +99,7 @@ const Requests = () => {
                                         <td>
                                             <button 
                                                 className="btn btn-danger" 
-                                                onClick={() => handleDelete(index)}
+                                                onClick={() => handleDelete(request.rId)}
                                             >
                                                 Delete
                                             </button>
