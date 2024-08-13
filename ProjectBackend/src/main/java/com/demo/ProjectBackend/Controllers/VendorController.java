@@ -1,7 +1,7 @@
+
 package com.demo.ProjectBackend.Controllers;
 
 import java.util.List;
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +45,6 @@ public class VendorController {
 	@PostMapping("/submitquote/{rid}")
 	public String submitQuote(@RequestBody Quotation quotation, @PathVariable("rid") int id) {
 		
-		System.out.println(quotation);
-		
-		System.out.println(id);
-		
 		User user = uservice.getLoggedInUser();
 		Vendor vendor = user.getVendor();
 		System.out.println("vendor: "+vendor);
@@ -91,6 +87,7 @@ public class VendorController {
 		return new ResponseEntity<>(rdto,HttpStatus.OK);
 		
 	}
+	
 	@GetMapping("/getVendor")
 	public ResponseEntity<Vendor> getVendor(){
 		User user = uservice.getLoggedInUser();

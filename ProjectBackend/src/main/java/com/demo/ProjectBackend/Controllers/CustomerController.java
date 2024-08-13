@@ -104,18 +104,18 @@ public class CustomerController {
 		return "cdashboard";
 	}
 	
-//	@GetMapping("/cdashboard")	
-//	public ResponseEntity<ResponseDTO> cdashboard(){
-//		User user = uservice.getLoggedInUser();
-//		System.out.println(user);
-//		Customer customer = uservice.getLoggedInUser().getCustomer();
-//		List<Request> rlist = cservice.getRequestsByCustomerId(customer.getCId());
-//		List<Quotation> qlist = cservice.getQuotationByCustomerId(customer.getCId());
-//		List<Orders> olist = cservice.getOrderById(customer.getCId());
-//		ResponseDTO rdto = new ResponseDTO(rlist, qlist, olist);
-//		return new ResponseEntity<>(rdto,HttpStatus.OK);
-//		
-//	}
+	@GetMapping("/cdashboard")	
+	public ResponseEntity<ResponseDTO> cdashboard(){
+		User user = uservice.getLoggedInUser();
+		System.out.println(user);
+		Customer customer = uservice.getLoggedInUser().getCustomer();
+		List<Request> rlist = cservice.getRequestsByCustomerId(customer.getCId());
+		List<Quotation> qlist = cservice.getQuotationByCustomerId(customer.getCId());
+		List<Orders> olist = cservice.getOrderById(customer.getCId());
+		ResponseDTO rdto = new ResponseDTO(rlist, qlist, olist);
+		return new ResponseEntity<>(rdto,HttpStatus.OK);
+		
+	}
 	
 	@GetMapping("/getcustomer")
 	public ResponseEntity<Customer> getCustomer(){
