@@ -167,7 +167,7 @@ function Home() {
       {/* How It Works */}
       <div
         className="row mt-3"
-        style={{ backgroundColor: "midnightblue", padding: "2% 0% 8% 0%" }}>
+        style={{ backgroundColor: "midnightblue", padding: "0% 0% 8% 0%" }}>
         <div
           className="benifits"
           style={{ marginBottom: "5rem", backgroundColor: "white" }}>
