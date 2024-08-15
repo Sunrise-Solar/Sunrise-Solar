@@ -187,8 +187,9 @@ const VendorApp = () => {
     }, [navigate, location.pathname]);
 
     const handleLogout = () => {
-        localStorage.removeItem('userType');
-        navigate('/');
+        console.log('token');
+        localStorage.clear();
+        navigate('/', { replace: true });
     };
 
     return (

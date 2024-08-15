@@ -29,7 +29,8 @@ const CustomerApp = () => {
 
   const handleLogout = () => {
     // Perform any additional logout logic here, such as clearing user data or tokens
-    navigate('/');
+    localStorage.clear();
+    navigate('/', { replace: true });
   };
 
   return (

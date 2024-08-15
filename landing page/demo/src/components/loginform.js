@@ -47,23 +47,31 @@ function Loginform({ setUserType }) {
         
         
         console.log('data fetched');
-        // Extract the token and role from the response
-        const { token, role } = response.data;
 
-        if (!token || !role) {
+        // Extract the token and role from the response
+       // const { token, role } = response.data;
+      //  if (!token || !role) {
+      //   throw new Error('Login failed: Token or role missing in response');
+      //   }
+
+      console.log('data fetched');
+       
+        // Save the token to localStorage or sessionStorage
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
+
+        if (!localStorage.getItem("token") || !localStorage.getItem("role")) {
           throw new Error('Login failed: Token or role missing in response');
         }
 
         console.log('data fetched');
-        // Save the token to localStorage or sessionStorage
-        localStorage.setItem('token', token);
 
         console.log('data fetched');
-        console.log({role});
-        setUserType(role);
-        if (role === 'vendor') {
+        //console.log({role});
+        setUserType(localStorage.getItem("role"));
+        if (localStorage.getItem("role") === 'vendor') {
           navigate('/vendor-dashboard');
-        } else if (role === 'customer') {
+        } else if (localStorage.getItem("role") === 'customer') {
           navigate('/customer-dashboard');
         } else {
           navigate('/'); 
@@ -145,13 +153,13 @@ function Loginform({ setUserType }) {
                         </div>
                         <div className="text-center pt-1 mb-5 pb-1">
                           <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log in</button>
-                          <button
+                          {/* <button
                             type="button"
                             className="btn btn-link"
                             onClick={() => setForgotPassword(true)}
                           >
                             Forgot Password?
-                          </button>
+                          </button> */}
                           {errors.form && <div style={{ color: 'red' }}>{errors.form}</div>}
                         </div>
                         <div className="d-flex align-items-center justify-content-center pb-4">
