@@ -19,20 +19,44 @@ function VendorRegistrationForm() {
 
   const validateForm = () => {
     const errors = {};
+  
+    // First name validation
     if (!fName) errors.fName = 'First name is required';
+  
+    // Last name validation
     if (!lName) errors.lName = 'Last name is required';
+  
+    // Mobile number validation: must be 10 digits
     if (!mobile) errors.mobile = 'Mobile number is required';
-    else if (!/^\d{10}$/.test(mobile)) errors.mobile = 'Invalid mobile number';
+    else if (!/^\d{10}$/.test(mobile)) errors.mobile = 'Mobile number must be 10 digits';
+  
+    // Email validation
     if (!email) errors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Invalid email address';
+  
+    // Company name validation: should not consist only of numbers
     if (!company) errors.company = 'Company name is required';
+    else if (/^\d+$/.test(company)) errors.company = 'Company name should not consist of only numbers';
+  
+    // Address validation: Should not consist of only numbers
     if (!address) errors.address = 'Address is required';
+    else if (/^\d+$/.test(address)) errors.address = 'Address should not consist of only numbers';
+  
+    // Pincode validation: must be 6 digits
+    // if (!pincode) errors.pincode = 'Pincode is required';
+    // else if (!/^\d{6}$/.test(pincode)) errors.pincode = 'Pincode must be 6 digits';
+  
+    // Password validation
     if (!password) errors.password = 'Password is required';
     else if (password.length < 8) errors.password = 'Password must be at least 8 characters long';
+  
+    // Confirm Password validation
     if (!confirmPassword) errors.confirmPassword = 'Confirm password is required';
     else if (confirmPassword !== password) errors.confirmPassword = 'Passwords do not match';
+  
     return errors;
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -157,6 +181,7 @@ function VendorRegistrationForm() {
                       </div>
                     </div>
                   </div>
+                  
 
                   <div className="row">
                     <div className="col-md-6 mb-4">

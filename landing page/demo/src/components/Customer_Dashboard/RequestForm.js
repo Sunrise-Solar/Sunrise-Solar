@@ -24,15 +24,39 @@ const RequestForm = () => {
 
     const validate = () => {
         const newErrors = {};
-        
-        if (!formData.propertyType) newErrors.propertyType = 'Property type is required';
-        if (!formData.address) newErrors.address = 'Address is required';
-        if (!formData.electricityBill || isNaN(formData.electricityBill)) newErrors.electricityBill = 'Valid electricity bill amount is required';
-        if (!formData.electricityConsumption || isNaN(formData.electricityConsumption)) newErrors.electricityConsumption = 'Valid electricity consumption is required';
-
+    
+        // Property type validation: required and should not be only numbers
+        if (!formData.propertyType) {
+            newErrors.propertyType = 'Property type is required';
+        } else if (/^\d+$/.test(formData.propertyType)) {
+            newErrors.propertyType = 'Property type should not consist of only numbers';
+        }
+    
+        // Address validation: required and should not be only numbers
+        if (!formData.address) {
+            newErrors.address = 'Address is required';
+        } else if (/^\d+$/.test(formData.address)) {
+            newErrors.address = 'Address should not consist of only numbers';
+        }
+    
+        // Electricity bill validation: must be a valid positive number
+        if (!formData.electricityBill) {
+            newErrors.electricityBill = 'Electricity bill amount is required';
+        } else if (isNaN(formData.electricityBill) || formData.electricityBill <= 0) {
+            newErrors.electricityBill = 'Valid positive electricity bill amount is required';
+        }
+    
+        // Electricity consumption validation: must be a valid positive number
+        if (!formData.electricityConsumption) {
+            newErrors.electricityConsumption = 'Electricity consumption is required';
+        } else if (isNaN(formData.electricityConsumption) || formData.electricityConsumption <= 0) {
+            newErrors.electricityConsumption = 'Valid positive electricity consumption is required';
+        }
+    
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
+    
 
     const handleSubmit = async (event) => {
         event.preventDefault();

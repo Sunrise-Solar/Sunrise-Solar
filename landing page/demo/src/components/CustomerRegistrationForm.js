@@ -18,29 +18,58 @@ function CustomerRegistrationForm() {
 
   const validateForm = () => {
     const errors = {};
+  
+    // First name validation
     if (!firstName) errors.firstName = 'First name is required';
+  
+    // Last name validation
     if (!lastName) errors.lastName = 'Last name is required';
-    if (!mobile) errors.mobile = 'Mobile number is required';
+  
+    // Mobile number validation: must be exactly 10 digits
+    if (!mobile) {
+      errors.mobile = 'Mobile number is required';
+    } else if (!/^\d{10}$/.test(mobile)) {
+      errors.mobile = 'Mobile number must be exactly 10 digits';
+    }
+  
+    // Email validation: must follow a standard email format
     if (!email) {
       errors.email = 'Email is required';
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
       errors.email = 'Invalid email address';
     }
-    if (!city) errors.city = 'City is required';
-    if (!pincode) errors.pincode = 'Pincode is required';
+  
+    // City validation: only letters allowed
+    if (!city) {
+      errors.city = 'City is required';
+    } else if (!/^[a-zA-Z\s]+$/.test(city)) {
+      errors.city = 'City name should contain only letters';
+    }
+  
+    // Pincode validation: must be exactly 6 digits
+    if (!pincode) {
+      errors.pincode = 'Pincode is required';
+    } else if (!/^\d{6}$/.test(pincode)) {
+      errors.pincode = 'Pincode must be exactly 6 digits';
+    }
+  
+    // Password validation: minimum 8 characters
     if (!password) {
       errors.password = 'Password is required';
     } else if (password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
     }
+  
+    // Confirm password validation: must match the password
     if (!confirmPassword) {
       errors.confirmPassword = 'Confirm password is required';
     } else if (confirmPassword !== password) {
       errors.confirmPassword = 'Passwords do not match';
     }
+  
     return errors;
   };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const errors = validateForm();
